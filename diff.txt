@@ -1,0 +1,99 @@
+7d6
+< import random
+26,32d24
+<         print("cfg.SEED: {}".format(cfg.SEED))
+<         time.sleep(1)
+<         if cfg.SEED > 0:
+<             np.random.seed(int(cfg.SEED))
+<             random.seed(cfg.SEED)
+<             torch.manual_seed(cfg.SEED)
+<             torch.cuda.manual_seed_all(cfg.SEED)
+194a187,188
+>         #print("seq_sample.shape: {}, log_prob_sample.shape: {}".format(
+>         #    seq_sample.shape, log_prob_sample.shape))
+196a191,193
+>         #print("rewards_sample.shape: {}".format(rewards_sample.shape))
+>         #print("rewards_sample: {}".format(rewards_sample))
+>         #exit(0)
+321a319,322
+>         #print("advs.shape: {}".format(advs.shape))
+>         #print("advs[:10]: {}".format(advs[:10]))
+>         #time.sleep(1)
+> 
+322a324,334
+>         #print("advs.mean(): {}".format(advs.mean()))
+>         #print("type(advs): {}".format(type(advs)))
+>         #exit(0)
+>         #advs = self.bn(advs.view(-1, 1).float()).view(-1)
+>         #advs = (advs - advs.mean()) / (advs.std() + 1e-8)
+>         #advs = (advs - advs.mean()) / (advs.max() - advs.min() + 1e-8)
+>         #advs = torch.clamp(advs, -1, 1)
+>         #print("advs: {}".format(advs))
+>         #time.sleep(1)
+>         #print("advs.std(unbiased=False): {}".format(advs.std(unbiased=False)))
+>         #advs = advs / (advs.std() + 1e-8)
+326a339
+>         #pg_loss = torch.max(pg_losses, pg_losses2).mean()
+331a345,349
+>         ##print("pg_loss.shape: {}".format(pg_loss.shape))
+>         #exit(0)
+>         #pg_loss = pg_loss.sum() / max(
+>         #    pg_loss.shape[0] - mask_total.detach().sum(), 1)
+>         # pg_loss = pg_losses.mean()
+333c351,366
+< 
+---
+>         # mask_positive = (advs > 0) & (ratio > 1 + 0.2)
+>         # mask_negative = (advs < 0) & (ratio < 1 - 0.2)
+>         # mask_total = mask_positive | mask_negative
+>         #self.mv_violate = 0.9 * self.mv_violate + 0.1 * mask_total.sum().item()
+>         # if self.mv_violate < 1:
+>         #    self.mv_violate = 1
+>         # kl_div = kl_div[mask_total].sum() / self.mv_violate
+> 
+>         # if mask_total.sum().item() > 0:
+>         #    approxkl = .5 * torch.mean(
+>         #        torch.square((neglogpac - oldneglogpac)[mask_total]))
+>         # else:
+>         #    approxkl = torch.tensor(0)
+>         # approxkl = .5 * torch.square((neglogpac - oldneglogpac)[mask_total]).sum() / advs.shape[0]
+>         # loss = pg_loss - entropy * ent_coef + self.beta * kl_div
+>         #loss = pg_loss - ent_coef * entropy
+334a368,372
+>         # if kl_div.item() < self.dtarg / 1.5:
+>         #    self.beta /= 2
+>         # if kl_div.item() > self.dtarg * 1.5:
+>         #    self.beta *= 2
+>         # self.beta = max(min(self.beta, 100), 0.5)
+338a377,378
+>         #self.mv_pg_loss = 0.9 * self.mv_pg_loss + 0.1 * pg_loss.item()
+>         #self.mv_loss = 0.9 * self.mv_loss + 0.1 * loss.item()
+340a381,396
+>     def process_advs(self, gen_result, advs):
+>         advs = advs.reshape(-1)
+>         advs = (advs - advs.mean()) / (advs.std() + 1e-8)
+>         return advs.reshape(self.nenvs, 5)
+>         gen_result = gen_result.reshape(-1, gen_result.shape[-1])
+>         advs = advs.reshape(-1, 1).repeat(gen_result.shape[-1], axis=-1)
+>         mask = gen_result > 0
+>         mask = np.concatenate((np.full(
+>             (mask.shape[0], 1), True), mask[:, :-1]), 1)
+>         x = advs[mask]
+>         print("x.mean(): {}".format(x.mean()))
+>         time.sleep(1)
+>         advs[mask] = np.clip((x - x.mean()) / (x.std() + 1e-8), -1, 1)
+>         advs[mask] = (x - x.mean()) / (x.std() + 1e-8)
+>         return advs.reshape(self.nenvs, 5, gen_result.shape[-1])
+> 
+356a413
+>             #data[-1] = self.process_advs(data[-2], data[-1])
+383c440
+<                     time.sleep(1)
+---
+>                     time.sleep(2)
+384a442
+>             #print("iteration {}".format(iteration))
+388c446
+<                 if iteration < 896 * 2 and iteration % 256 == 0:
+---
+>                 if iteration < 896 * 2 and iteration % 128 == 0:

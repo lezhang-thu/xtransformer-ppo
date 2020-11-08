@@ -1,0 +1,1125 @@
+[INFO: 2020-09-05 23:13:05,394] Training with config:
+[INFO: 2020-09-05 23:13:05,396] {'DATA_LOADER': {'DROP_LAST': True,
+                 'INPUT_SEQ_PATH': './mscoco/sent/coco_train_input.pkl',
+                 'MAX_FEAT': 50,
+                 'NUM_WORKERS': 4,
+                 'PIN_MEMORY': True,
+                 'SEQ_PER_IMG': 5,
+                 'SHUFFLE': True,
+                 'TARGET_SEQ_PATH': './mscoco/sent/coco_train_target.pkl',
+                 'TEST_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'TEST_GV_FEAT': '',
+                 'TEST_ID': './mscoco/txt/coco_test_image_id.txt',
+                 'TRAIN_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'TRAIN_GV_FEAT': '',
+                 'TRAIN_ID': './mscoco/txt/coco_train_image_id.txt',
+                 'VAL_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'VAL_GV_FEAT': '',
+                 'VAL_ID': './mscoco/txt/coco_val_image_id.txt'},
+ 'EPS': 1e-14,
+ 'INFERENCE': {'BEAM_SIZE': 2,
+               'CAP_KEY': 'caption',
+               'COCO_PATH': 'coco-caption',
+               'EVAL': 'COCO',
+               'GREEDY_DECODE': True,
+               'ID_KEY': 'image_id',
+               'TEST_ANNFILE': './mscoco/misc/captions_test5k.json',
+               'VAL_ANNFILE': './mscoco/misc/captions_val5k.json',
+               'VOCAB': './mscoco/txt/coco_vocabulary.txt'},
+ 'LOGGER_NAME': 'log',
+ 'LOSSES': {'LABELSMOOTHING': 0.1,
+            'RL_TYPE': 'RewardCriterion',
+            'XE_TYPE': 'LabelSmoothing'},
+ 'MEAN': [0.485, 0.456, 0.406],
+ 'MODEL': {'ATT_ACT': 'TANH',
+           'ATT_FEATS_DIM': 2048,
+           'ATT_FEATS_EMBED_ACT': 'CELU',
+           'ATT_FEATS_EMBED_DIM': 768,
+           'ATT_FEATS_NORM': True,
+           'ATT_HIDDEN_DROP': 0.0,
+           'ATT_HIDDEN_SIZE': -1,
+           'BILINEAR': {'ACT': 'CELU',
+                        'ATTTYPE': 'SCAtt',
+                        'ATT_DIM': 768,
+                        'BIFEAT_EMB_ACT': 'RELU',
+                        'DECODE_ATT_MID_DIM': [96, 48, 96],
+                        'DECODE_ATT_MID_DROPOUT': 0.1,
+                        'DECODE_BIFEAT_EMB_DROPOUT': 0.1,
+                        'DECODE_BLOCK': 'LowRankBilinearDec',
+                        'DECODE_DROPOUT': 0.1,
+                        'DECODE_FF_DROPOUT': 0.5,
+                        'DECODE_LAYERS': 6,
+                        'DIM': 768,
+                        'ELU_ALPHA': 1.3,
+                        'ENCODE_ATT_MID_DIM': [96, 48, 96],
+                        'ENCODE_ATT_MID_DROPOUT': 0.1,
+                        'ENCODE_BIFEAT_EMB_DROPOUT': 0.1,
+                        'ENCODE_BLOCK': 'LowRankBilinearEnc',
+                        'ENCODE_DROPOUT': 0.5,
+                        'ENCODE_FF_DROPOUT': 0.5,
+                        'ENCODE_LAYERS': 6,
+                        'HEAD': 8,
+                        'TYPE': 'LowRank'},
+           'BOTTOM_UP': {'DROPOUT_FIRST_INPUT': 0.0, 'DROPOUT_SEC_INPUT': 0.0},
+           'DROPOUT_ATT_EMBED': 0.5,
+           'DROPOUT_GV_EMBED': 0.0,
+           'DROPOUT_LM': 0.0,
+           'DROPOUT_WORD_EMBED': 0.1,
+           'GVFEAT_DIM': 2048,
+           'GVFEAT_EMBED_ACT': 'NONE',
+           'GVFEAT_EMBED_DIM': -1,
+           'RNN_SIZE': 1024,
+           'SEQ_LEN': 17,
+           'TRANSFORMER': {'PE_MAX_LEN': 5000},
+           'TYPE': 'XTransformer',
+           'VOCAB_SIZE': 9487,
+           'WORD_EMBED_ACT': 'CELU',
+           'WORD_EMBED_DIM': 768,
+           'WORD_EMBED_NORM': False},
+ 'PARAM': {'ADVS': 'ADVS',
+           'ATT_FEATS': 'ATT_FEATS',
+           'ATT_FEATS_MASK': 'ATT_FEATS_MASK',
+           'GEN_RESULT': 'GEN_RESULT',
+           'GLOBAL_FEAT': 'GV_FEAT',
+           'INDICES': 'INDICES',
+           'INPUT_SENT': 'INPUT_SENT',
+           'P_ATT_FEATS': 'P_ATT_FEATS',
+           'SAMPLE_LOGPROBS': 'SAMPLE_LOGPROBS',
+           'STATE': 'STATE',
+           'TARGET_SENT': 'TARGET_SENT',
+           'WT': 'WT'},
+ 'ROOT_DIR': './experiments/y_xtransformer_rl',
+ 'SCORER': {'CIDER_CACHED': './mscoco/misc/coco_train_cider.pkl',
+            'GT_PATH': './mscoco/misc/coco_train_gts.pkl',
+            'TYPES': ['CIDEr'],
+            'WEIGHTS': [1.0]},
+ 'SEED': 1546884941.160048,
+ 'SOLVER': {'ADAM': {'BETAS': [0.9, 0.999], 'EPS': 1e-08},
+            'BASE_LR': 1e-05,
+            'BIAS_LR_FACTOR': 1,
+            'DISPLAY': 20,
+            'GRAD_CLIP': 0.1,
+            'GRAD_CLIP_TYPE': 'Clamp',
+            'LR_POLICY': {'FACTOR': 1.0,
+                          'GAMMA': 0.8,
+                          'MODEL_SIZE': 768,
+                          'PLATEAU_FACTOR': 0.8,
+                          'PLATEAU_PATIENCE': 3,
+                          'SETP_TYPE': 'Epoch',
+                          'STEPS': [3],
+                          'STEP_SIZE': 3,
+                          'TYPE': 'Plateau',
+                          'WARMUP': 10000},
+            'MAX_EPOCH': 60,
+            'MAX_ITER': -1,
+            'SGD': {'MOMENTUM': 0.9},
+            'SNAPSHOT_ITERS': 1,
+            'TEST_INTERVAL': 1,
+            'TYPE': 'RADAM',
+            'WEIGHT_DECAY': 0.0,
+            'WEIGHT_DECAY_BIAS': 0.0},
+ 'STD': [0.229, 0.224, 0.225],
+ 'TEMP_DIR': './data/temp',
+ 'TEST': {'BATCH_SIZE': 36},
+ 'TRAIN': {'BATCH_SIZE': 32,
+           'REINFORCEMENT': {'START': 0},
+           'SCHEDULED_SAMPLING': {'INC_EVERY': 5,
+                                  'INC_PROB': 0.05,
+                                  'MAX_PROB': 0.25,
+                                  'START': 0}}}
+[INFO: 2020-09-05 23:14:20,355] val_current @iteration 0: 1.307807880786779, val_best: 1.307807880786779
+[INFO: 2020-09-05 23:23:01,160] val_current @iteration 100: 1.3067399055587208, val_best: 1.307807880786779
+[INFO: 2020-09-05 23:23:01,160] mv_approxkl: 0.022431600717571307
+[INFO: 2020-09-05 23:23:01,160] beta: 1.0
+[INFO: 2020-09-05 23:31:38,987] val_current @iteration 200: 1.305062152900049, val_best: 1.307807880786779
+[INFO: 2020-09-05 23:31:38,987] mv_approxkl: 0.028325839615594876
+[INFO: 2020-09-05 23:31:38,987] beta: 1.0
+[INFO: 2020-09-05 23:40:18,475] val_current @iteration 300: 1.3069844376657263, val_best: 1.307807880786779
+[INFO: 2020-09-05 23:40:18,476] mv_approxkl: 0.03471003861862791
+[INFO: 2020-09-05 23:40:18,476] beta: 1.0
+[INFO: 2020-09-05 23:48:55,968] val_current @iteration 400: 1.3044834484377894, val_best: 1.307807880786779
+[INFO: 2020-09-05 23:48:55,968] mv_approxkl: 0.022228019350026478
+[INFO: 2020-09-05 23:48:55,968] beta: 1.0
+[INFO: 2020-09-05 23:50:29,790] Training with config:
+[INFO: 2020-09-05 23:50:29,792] {'DATA_LOADER': {'DROP_LAST': True,
+                 'INPUT_SEQ_PATH': './mscoco/sent/coco_train_input.pkl',
+                 'MAX_FEAT': 50,
+                 'NUM_WORKERS': 4,
+                 'PIN_MEMORY': True,
+                 'SEQ_PER_IMG': 5,
+                 'SHUFFLE': True,
+                 'TARGET_SEQ_PATH': './mscoco/sent/coco_train_target.pkl',
+                 'TEST_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'TEST_GV_FEAT': '',
+                 'TEST_ID': './mscoco/txt/coco_test_image_id.txt',
+                 'TRAIN_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'TRAIN_GV_FEAT': '',
+                 'TRAIN_ID': './mscoco/txt/coco_train_image_id.txt',
+                 'VAL_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'VAL_GV_FEAT': '',
+                 'VAL_ID': './mscoco/txt/coco_val_image_id.txt'},
+ 'EPS': 1e-14,
+ 'INFERENCE': {'BEAM_SIZE': 2,
+               'CAP_KEY': 'caption',
+               'COCO_PATH': 'coco-caption',
+               'EVAL': 'COCO',
+               'GREEDY_DECODE': True,
+               'ID_KEY': 'image_id',
+               'TEST_ANNFILE': './mscoco/misc/captions_test5k.json',
+               'VAL_ANNFILE': './mscoco/misc/captions_val5k.json',
+               'VOCAB': './mscoco/txt/coco_vocabulary.txt'},
+ 'LOGGER_NAME': 'log',
+ 'LOSSES': {'LABELSMOOTHING': 0.1,
+            'RL_TYPE': 'RewardCriterion',
+            'XE_TYPE': 'LabelSmoothing'},
+ 'MEAN': [0.485, 0.456, 0.406],
+ 'MODEL': {'ATT_ACT': 'TANH',
+           'ATT_FEATS_DIM': 2048,
+           'ATT_FEATS_EMBED_ACT': 'CELU',
+           'ATT_FEATS_EMBED_DIM': 768,
+           'ATT_FEATS_NORM': True,
+           'ATT_HIDDEN_DROP': 0.0,
+           'ATT_HIDDEN_SIZE': -1,
+           'BILINEAR': {'ACT': 'CELU',
+                        'ATTTYPE': 'SCAtt',
+                        'ATT_DIM': 768,
+                        'BIFEAT_EMB_ACT': 'RELU',
+                        'DECODE_ATT_MID_DIM': [96, 48, 96],
+                        'DECODE_ATT_MID_DROPOUT': 0.1,
+                        'DECODE_BIFEAT_EMB_DROPOUT': 0.1,
+                        'DECODE_BLOCK': 'LowRankBilinearDec',
+                        'DECODE_DROPOUT': 0.1,
+                        'DECODE_FF_DROPOUT': 0.5,
+                        'DECODE_LAYERS': 6,
+                        'DIM': 768,
+                        'ELU_ALPHA': 1.3,
+                        'ENCODE_ATT_MID_DIM': [96, 48, 96],
+                        'ENCODE_ATT_MID_DROPOUT': 0.1,
+                        'ENCODE_BIFEAT_EMB_DROPOUT': 0.1,
+                        'ENCODE_BLOCK': 'LowRankBilinearEnc',
+                        'ENCODE_DROPOUT': 0.5,
+                        'ENCODE_FF_DROPOUT': 0.5,
+                        'ENCODE_LAYERS': 6,
+                        'HEAD': 8,
+                        'TYPE': 'LowRank'},
+           'BOTTOM_UP': {'DROPOUT_FIRST_INPUT': 0.0, 'DROPOUT_SEC_INPUT': 0.0},
+           'DROPOUT_ATT_EMBED': 0.5,
+           'DROPOUT_GV_EMBED': 0.0,
+           'DROPOUT_LM': 0.0,
+           'DROPOUT_WORD_EMBED': 0.1,
+           'GVFEAT_DIM': 2048,
+           'GVFEAT_EMBED_ACT': 'NONE',
+           'GVFEAT_EMBED_DIM': -1,
+           'RNN_SIZE': 1024,
+           'SEQ_LEN': 17,
+           'TRANSFORMER': {'PE_MAX_LEN': 5000},
+           'TYPE': 'XTransformer',
+           'VOCAB_SIZE': 9487,
+           'WORD_EMBED_ACT': 'CELU',
+           'WORD_EMBED_DIM': 768,
+           'WORD_EMBED_NORM': False},
+ 'PARAM': {'ADVS': 'ADVS',
+           'ATT_FEATS': 'ATT_FEATS',
+           'ATT_FEATS_MASK': 'ATT_FEATS_MASK',
+           'GEN_RESULT': 'GEN_RESULT',
+           'GLOBAL_FEAT': 'GV_FEAT',
+           'INDICES': 'INDICES',
+           'INPUT_SENT': 'INPUT_SENT',
+           'P_ATT_FEATS': 'P_ATT_FEATS',
+           'SAMPLE_LOGPROBS': 'SAMPLE_LOGPROBS',
+           'STATE': 'STATE',
+           'TARGET_SENT': 'TARGET_SENT',
+           'WT': 'WT'},
+ 'ROOT_DIR': './experiments/y_xtransformer_rl',
+ 'SCORER': {'CIDER_CACHED': './mscoco/misc/coco_train_cider.pkl',
+            'GT_PATH': './mscoco/misc/coco_train_gts.pkl',
+            'TYPES': ['CIDEr'],
+            'WEIGHTS': [1.0]},
+ 'SEED': 1546884941.160048,
+ 'SOLVER': {'ADAM': {'BETAS': [0.9, 0.999], 'EPS': 1e-08},
+            'BASE_LR': 1e-05,
+            'BIAS_LR_FACTOR': 1,
+            'DISPLAY': 20,
+            'GRAD_CLIP': 0.1,
+            'GRAD_CLIP_TYPE': 'Clamp',
+            'LR_POLICY': {'FACTOR': 1.0,
+                          'GAMMA': 0.8,
+                          'MODEL_SIZE': 768,
+                          'PLATEAU_FACTOR': 0.8,
+                          'PLATEAU_PATIENCE': 3,
+                          'SETP_TYPE': 'Epoch',
+                          'STEPS': [3],
+                          'STEP_SIZE': 3,
+                          'TYPE': 'Plateau',
+                          'WARMUP': 10000},
+            'MAX_EPOCH': 60,
+            'MAX_ITER': -1,
+            'SGD': {'MOMENTUM': 0.9},
+            'SNAPSHOT_ITERS': 1,
+            'TEST_INTERVAL': 1,
+            'TYPE': 'RADAM',
+            'WEIGHT_DECAY': 0.0,
+            'WEIGHT_DECAY_BIAS': 0.0},
+ 'STD': [0.229, 0.224, 0.225],
+ 'TEMP_DIR': './data/temp',
+ 'TEST': {'BATCH_SIZE': 36},
+ 'TRAIN': {'BATCH_SIZE': 32,
+           'REINFORCEMENT': {'START': 0},
+           'SCHEDULED_SAMPLING': {'INC_EVERY': 5,
+                                  'INC_PROB': 0.05,
+                                  'MAX_PROB': 0.25,
+                                  'START': 0}}}
+[INFO: 2020-09-05 23:51:45,982] val_current @iteration 0: 1.307807880786779, val_best: 1.307807880786779
+[INFO: 2020-09-06 00:00:23,683] val_current @iteration 100: 1.3058065331680557, val_best: 1.307807880786779
+[INFO: 2020-09-06 00:00:23,683] mv_approxkl: 0.09705286225076282
+[INFO: 2020-09-06 00:00:23,684] beta: 1.0
+[INFO: 2020-09-06 00:02:07,802] Training with config:
+[INFO: 2020-09-06 00:02:07,804] {'DATA_LOADER': {'DROP_LAST': True,
+                 'INPUT_SEQ_PATH': './mscoco/sent/coco_train_input.pkl',
+                 'MAX_FEAT': 50,
+                 'NUM_WORKERS': 4,
+                 'PIN_MEMORY': True,
+                 'SEQ_PER_IMG': 5,
+                 'SHUFFLE': True,
+                 'TARGET_SEQ_PATH': './mscoco/sent/coco_train_target.pkl',
+                 'TEST_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'TEST_GV_FEAT': '',
+                 'TEST_ID': './mscoco/txt/coco_test_image_id.txt',
+                 'TRAIN_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'TRAIN_GV_FEAT': '',
+                 'TRAIN_ID': './mscoco/txt/coco_train_image_id.txt',
+                 'VAL_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'VAL_GV_FEAT': '',
+                 'VAL_ID': './mscoco/txt/coco_val_image_id.txt'},
+ 'EPS': 1e-14,
+ 'INFERENCE': {'BEAM_SIZE': 2,
+               'CAP_KEY': 'caption',
+               'COCO_PATH': 'coco-caption',
+               'EVAL': 'COCO',
+               'GREEDY_DECODE': True,
+               'ID_KEY': 'image_id',
+               'TEST_ANNFILE': './mscoco/misc/captions_test5k.json',
+               'VAL_ANNFILE': './mscoco/misc/captions_val5k.json',
+               'VOCAB': './mscoco/txt/coco_vocabulary.txt'},
+ 'LOGGER_NAME': 'log',
+ 'LOSSES': {'LABELSMOOTHING': 0.1,
+            'RL_TYPE': 'RewardCriterion',
+            'XE_TYPE': 'LabelSmoothing'},
+ 'MEAN': [0.485, 0.456, 0.406],
+ 'MODEL': {'ATT_ACT': 'TANH',
+           'ATT_FEATS_DIM': 2048,
+           'ATT_FEATS_EMBED_ACT': 'CELU',
+           'ATT_FEATS_EMBED_DIM': 768,
+           'ATT_FEATS_NORM': True,
+           'ATT_HIDDEN_DROP': 0.0,
+           'ATT_HIDDEN_SIZE': -1,
+           'BILINEAR': {'ACT': 'CELU',
+                        'ATTTYPE': 'SCAtt',
+                        'ATT_DIM': 768,
+                        'BIFEAT_EMB_ACT': 'RELU',
+                        'DECODE_ATT_MID_DIM': [96, 48, 96],
+                        'DECODE_ATT_MID_DROPOUT': 0.1,
+                        'DECODE_BIFEAT_EMB_DROPOUT': 0.1,
+                        'DECODE_BLOCK': 'LowRankBilinearDec',
+                        'DECODE_DROPOUT': 0.1,
+                        'DECODE_FF_DROPOUT': 0.5,
+                        'DECODE_LAYERS': 6,
+                        'DIM': 768,
+                        'ELU_ALPHA': 1.3,
+                        'ENCODE_ATT_MID_DIM': [96, 48, 96],
+                        'ENCODE_ATT_MID_DROPOUT': 0.1,
+                        'ENCODE_BIFEAT_EMB_DROPOUT': 0.1,
+                        'ENCODE_BLOCK': 'LowRankBilinearEnc',
+                        'ENCODE_DROPOUT': 0.5,
+                        'ENCODE_FF_DROPOUT': 0.5,
+                        'ENCODE_LAYERS': 6,
+                        'HEAD': 8,
+                        'TYPE': 'LowRank'},
+           'BOTTOM_UP': {'DROPOUT_FIRST_INPUT': 0.0, 'DROPOUT_SEC_INPUT': 0.0},
+           'DROPOUT_ATT_EMBED': 0.5,
+           'DROPOUT_GV_EMBED': 0.0,
+           'DROPOUT_LM': 0.0,
+           'DROPOUT_WORD_EMBED': 0.1,
+           'GVFEAT_DIM': 2048,
+           'GVFEAT_EMBED_ACT': 'NONE',
+           'GVFEAT_EMBED_DIM': -1,
+           'RNN_SIZE': 1024,
+           'SEQ_LEN': 17,
+           'TRANSFORMER': {'PE_MAX_LEN': 5000},
+           'TYPE': 'XTransformer',
+           'VOCAB_SIZE': 9487,
+           'WORD_EMBED_ACT': 'CELU',
+           'WORD_EMBED_DIM': 768,
+           'WORD_EMBED_NORM': False},
+ 'PARAM': {'ADVS': 'ADVS',
+           'ATT_FEATS': 'ATT_FEATS',
+           'ATT_FEATS_MASK': 'ATT_FEATS_MASK',
+           'GEN_RESULT': 'GEN_RESULT',
+           'GLOBAL_FEAT': 'GV_FEAT',
+           'INDICES': 'INDICES',
+           'INPUT_SENT': 'INPUT_SENT',
+           'P_ATT_FEATS': 'P_ATT_FEATS',
+           'SAMPLE_LOGPROBS': 'SAMPLE_LOGPROBS',
+           'STATE': 'STATE',
+           'TARGET_SENT': 'TARGET_SENT',
+           'WT': 'WT'},
+ 'ROOT_DIR': './experiments/y_xtransformer_rl',
+ 'SCORER': {'CIDER_CACHED': './mscoco/misc/coco_train_cider.pkl',
+            'GT_PATH': './mscoco/misc/coco_train_gts.pkl',
+            'TYPES': ['CIDEr'],
+            'WEIGHTS': [1.0]},
+ 'SEED': 1546884941.160048,
+ 'SOLVER': {'ADAM': {'BETAS': [0.9, 0.999], 'EPS': 1e-08},
+            'BASE_LR': 1e-05,
+            'BIAS_LR_FACTOR': 1,
+            'DISPLAY': 20,
+            'GRAD_CLIP': 0.1,
+            'GRAD_CLIP_TYPE': 'Clamp',
+            'LR_POLICY': {'FACTOR': 1.0,
+                          'GAMMA': 0.8,
+                          'MODEL_SIZE': 768,
+                          'PLATEAU_FACTOR': 0.8,
+                          'PLATEAU_PATIENCE': 3,
+                          'SETP_TYPE': 'Epoch',
+                          'STEPS': [3],
+                          'STEP_SIZE': 3,
+                          'TYPE': 'Plateau',
+                          'WARMUP': 10000},
+            'MAX_EPOCH': 60,
+            'MAX_ITER': -1,
+            'SGD': {'MOMENTUM': 0.9},
+            'SNAPSHOT_ITERS': 1,
+            'TEST_INTERVAL': 1,
+            'TYPE': 'RADAM',
+            'WEIGHT_DECAY': 0.0,
+            'WEIGHT_DECAY_BIAS': 0.0},
+ 'STD': [0.229, 0.224, 0.225],
+ 'TEMP_DIR': './data/temp',
+ 'TEST': {'BATCH_SIZE': 36},
+ 'TRAIN': {'BATCH_SIZE': 32,
+           'REINFORCEMENT': {'START': 0},
+           'SCHEDULED_SAMPLING': {'INC_EVERY': 5,
+                                  'INC_PROB': 0.05,
+                                  'MAX_PROB': 0.25,
+                                  'START': 0}}}
+[INFO: 2020-09-06 00:03:22,540] val_current @iteration 0: 1.307807880786779, val_best: 1.307807880786779
+[INFO: 2020-09-06 00:11:56,650] val_current @iteration 100: 1.307999047154633, val_best: 1.307807880786779
+[INFO: 2020-09-06 00:11:56,650] mv_approxkl: 0.09829446309325543
+[INFO: 2020-09-06 00:11:56,650] beta: 1.0
+[INFO: 2020-09-06 00:14:01,782] Training with config:
+[INFO: 2020-09-06 00:14:01,783] {'DATA_LOADER': {'DROP_LAST': True,
+                 'INPUT_SEQ_PATH': './mscoco/sent/coco_train_input.pkl',
+                 'MAX_FEAT': 50,
+                 'NUM_WORKERS': 4,
+                 'PIN_MEMORY': True,
+                 'SEQ_PER_IMG': 5,
+                 'SHUFFLE': True,
+                 'TARGET_SEQ_PATH': './mscoco/sent/coco_train_target.pkl',
+                 'TEST_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'TEST_GV_FEAT': '',
+                 'TEST_ID': './mscoco/txt/coco_test_image_id.txt',
+                 'TRAIN_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'TRAIN_GV_FEAT': '',
+                 'TRAIN_ID': './mscoco/txt/coco_train_image_id.txt',
+                 'VAL_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'VAL_GV_FEAT': '',
+                 'VAL_ID': './mscoco/txt/coco_val_image_id.txt'},
+ 'EPS': 1e-14,
+ 'INFERENCE': {'BEAM_SIZE': 2,
+               'CAP_KEY': 'caption',
+               'COCO_PATH': 'coco-caption',
+               'EVAL': 'COCO',
+               'GREEDY_DECODE': True,
+               'ID_KEY': 'image_id',
+               'TEST_ANNFILE': './mscoco/misc/captions_test5k.json',
+               'VAL_ANNFILE': './mscoco/misc/captions_val5k.json',
+               'VOCAB': './mscoco/txt/coco_vocabulary.txt'},
+ 'LOGGER_NAME': 'log',
+ 'LOSSES': {'LABELSMOOTHING': 0.1,
+            'RL_TYPE': 'RewardCriterion',
+            'XE_TYPE': 'LabelSmoothing'},
+ 'MEAN': [0.485, 0.456, 0.406],
+ 'MODEL': {'ATT_ACT': 'TANH',
+           'ATT_FEATS_DIM': 2048,
+           'ATT_FEATS_EMBED_ACT': 'CELU',
+           'ATT_FEATS_EMBED_DIM': 768,
+           'ATT_FEATS_NORM': True,
+           'ATT_HIDDEN_DROP': 0.0,
+           'ATT_HIDDEN_SIZE': -1,
+           'BILINEAR': {'ACT': 'CELU',
+                        'ATTTYPE': 'SCAtt',
+                        'ATT_DIM': 768,
+                        'BIFEAT_EMB_ACT': 'RELU',
+                        'DECODE_ATT_MID_DIM': [96, 48, 96],
+                        'DECODE_ATT_MID_DROPOUT': 0.1,
+                        'DECODE_BIFEAT_EMB_DROPOUT': 0.1,
+                        'DECODE_BLOCK': 'LowRankBilinearDec',
+                        'DECODE_DROPOUT': 0.1,
+                        'DECODE_FF_DROPOUT': 0.5,
+                        'DECODE_LAYERS': 6,
+                        'DIM': 768,
+                        'ELU_ALPHA': 1.3,
+                        'ENCODE_ATT_MID_DIM': [96, 48, 96],
+                        'ENCODE_ATT_MID_DROPOUT': 0.1,
+                        'ENCODE_BIFEAT_EMB_DROPOUT': 0.1,
+                        'ENCODE_BLOCK': 'LowRankBilinearEnc',
+                        'ENCODE_DROPOUT': 0.5,
+                        'ENCODE_FF_DROPOUT': 0.5,
+                        'ENCODE_LAYERS': 6,
+                        'HEAD': 8,
+                        'TYPE': 'LowRank'},
+           'BOTTOM_UP': {'DROPOUT_FIRST_INPUT': 0.0, 'DROPOUT_SEC_INPUT': 0.0},
+           'DROPOUT_ATT_EMBED': 0.5,
+           'DROPOUT_GV_EMBED': 0.0,
+           'DROPOUT_LM': 0.0,
+           'DROPOUT_WORD_EMBED': 0.1,
+           'GVFEAT_DIM': 2048,
+           'GVFEAT_EMBED_ACT': 'NONE',
+           'GVFEAT_EMBED_DIM': -1,
+           'RNN_SIZE': 1024,
+           'SEQ_LEN': 17,
+           'TRANSFORMER': {'PE_MAX_LEN': 5000},
+           'TYPE': 'XTransformer',
+           'VOCAB_SIZE': 9487,
+           'WORD_EMBED_ACT': 'CELU',
+           'WORD_EMBED_DIM': 768,
+           'WORD_EMBED_NORM': False},
+ 'PARAM': {'ADVS': 'ADVS',
+           'ATT_FEATS': 'ATT_FEATS',
+           'ATT_FEATS_MASK': 'ATT_FEATS_MASK',
+           'GEN_RESULT': 'GEN_RESULT',
+           'GLOBAL_FEAT': 'GV_FEAT',
+           'INDICES': 'INDICES',
+           'INPUT_SENT': 'INPUT_SENT',
+           'P_ATT_FEATS': 'P_ATT_FEATS',
+           'SAMPLE_LOGPROBS': 'SAMPLE_LOGPROBS',
+           'STATE': 'STATE',
+           'TARGET_SENT': 'TARGET_SENT',
+           'WT': 'WT'},
+ 'ROOT_DIR': './experiments/y_xtransformer_rl',
+ 'SCORER': {'CIDER_CACHED': './mscoco/misc/coco_train_cider.pkl',
+            'GT_PATH': './mscoco/misc/coco_train_gts.pkl',
+            'TYPES': ['CIDEr'],
+            'WEIGHTS': [1.0]},
+ 'SEED': 1546884941.160048,
+ 'SOLVER': {'ADAM': {'BETAS': [0.9, 0.999], 'EPS': 1e-08},
+            'BASE_LR': 1e-05,
+            'BIAS_LR_FACTOR': 1,
+            'DISPLAY': 20,
+            'GRAD_CLIP': 0.1,
+            'GRAD_CLIP_TYPE': 'Clamp',
+            'LR_POLICY': {'FACTOR': 1.0,
+                          'GAMMA': 0.8,
+                          'MODEL_SIZE': 768,
+                          'PLATEAU_FACTOR': 0.8,
+                          'PLATEAU_PATIENCE': 3,
+                          'SETP_TYPE': 'Epoch',
+                          'STEPS': [3],
+                          'STEP_SIZE': 3,
+                          'TYPE': 'Plateau',
+                          'WARMUP': 10000},
+            'MAX_EPOCH': 60,
+            'MAX_ITER': -1,
+            'SGD': {'MOMENTUM': 0.9},
+            'SNAPSHOT_ITERS': 1,
+            'TEST_INTERVAL': 1,
+            'TYPE': 'RADAM',
+            'WEIGHT_DECAY': 0.0,
+            'WEIGHT_DECAY_BIAS': 0.0},
+ 'STD': [0.229, 0.224, 0.225],
+ 'TEMP_DIR': './data/temp',
+ 'TEST': {'BATCH_SIZE': 36},
+ 'TRAIN': {'BATCH_SIZE': 32,
+           'REINFORCEMENT': {'START': 0},
+           'SCHEDULED_SAMPLING': {'INC_EVERY': 5,
+                                  'INC_PROB': 0.05,
+                                  'MAX_PROB': 0.25,
+                                  'START': 0}}}
+[INFO: 2020-09-06 00:15:16,255] val_current @iteration 0: 1.307807880786779, val_best: 1.307807880786779
+[INFO: 2020-09-06 00:20:34,146] val_current @iteration 100: 1.3092477880791997, val_best: 1.307807880786779
+[INFO: 2020-09-06 00:20:34,147] mv_approxkl: 0.06845295801006848
+[INFO: 2020-09-06 00:20:34,147] beta: 1.0
+[INFO: 2020-09-06 00:25:49,189] val_current @iteration 200: 1.3088235334689353, val_best: 1.3092477880791997
+[INFO: 2020-09-06 00:25:49,189] mv_approxkl: 0.07378856079234532
+[INFO: 2020-09-06 00:25:49,189] beta: 1.0
+[INFO: 2020-09-06 00:31:06,686] val_current @iteration 300: 1.3089461369013533, val_best: 1.3092477880791997
+[INFO: 2020-09-06 00:31:06,686] mv_approxkl: 0.09765077148905658
+[INFO: 2020-09-06 00:31:06,686] beta: 1.0
+[INFO: 2020-09-06 00:36:22,546] val_current @iteration 400: 1.3095061033908832, val_best: 1.3092477880791997
+[INFO: 2020-09-06 00:36:22,546] mv_approxkl: 0.09399942810898533
+[INFO: 2020-09-06 00:36:22,546] beta: 1.0
+[INFO: 2020-09-06 00:41:37,786] val_current @iteration 500: 1.3051598090629766, val_best: 1.3095061033908832
+[INFO: 2020-09-06 00:41:37,787] mv_approxkl: 0.1973950040308254
+[INFO: 2020-09-06 00:41:37,787] beta: 1.0
+[INFO: 2020-09-06 00:46:53,344] val_current @iteration 600: 1.3083737086883576, val_best: 1.3095061033908832
+[INFO: 2020-09-06 00:46:53,344] mv_approxkl: 0.10174586078323909
+[INFO: 2020-09-06 00:46:53,344] beta: 1.0
+[INFO: 2020-09-06 00:52:08,040] val_current @iteration 700: 1.3074273385542021, val_best: 1.3095061033908832
+[INFO: 2020-09-06 00:52:08,040] mv_approxkl: 0.19891017346691253
+[INFO: 2020-09-06 00:52:08,040] beta: 1.0
+[INFO: 2020-09-06 00:57:24,953] val_current @iteration 800: 1.3049615040712135, val_best: 1.3095061033908832
+[INFO: 2020-09-06 00:57:24,953] mv_approxkl: 0.1158827727271644
+[INFO: 2020-09-06 00:57:24,953] beta: 1.0
+[INFO: 2020-09-06 01:02:40,851] val_current @iteration 900: 1.3078637424959838, val_best: 1.3095061033908832
+[INFO: 2020-09-06 01:02:40,851] mv_approxkl: 0.21949023974397072
+[INFO: 2020-09-06 01:02:40,851] beta: 1.0
+[INFO: 2020-09-06 01:05:55,336] Training with config:
+[INFO: 2020-09-06 01:05:55,338] {'DATA_LOADER': {'DROP_LAST': True,
+                 'INPUT_SEQ_PATH': './mscoco/sent/coco_train_input.pkl',
+                 'MAX_FEAT': 50,
+                 'NUM_WORKERS': 4,
+                 'PIN_MEMORY': True,
+                 'SEQ_PER_IMG': 5,
+                 'SHUFFLE': True,
+                 'TARGET_SEQ_PATH': './mscoco/sent/coco_train_target.pkl',
+                 'TEST_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'TEST_GV_FEAT': '',
+                 'TEST_ID': './mscoco/txt/coco_test_image_id.txt',
+                 'TRAIN_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'TRAIN_GV_FEAT': '',
+                 'TRAIN_ID': './mscoco/txt/coco_train_image_id.txt',
+                 'VAL_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'VAL_GV_FEAT': '',
+                 'VAL_ID': './mscoco/txt/coco_val_image_id.txt'},
+ 'EPS': 1e-14,
+ 'INFERENCE': {'BEAM_SIZE': 2,
+               'CAP_KEY': 'caption',
+               'COCO_PATH': 'coco-caption',
+               'EVAL': 'COCO',
+               'GREEDY_DECODE': True,
+               'ID_KEY': 'image_id',
+               'TEST_ANNFILE': './mscoco/misc/captions_test5k.json',
+               'VAL_ANNFILE': './mscoco/misc/captions_val5k.json',
+               'VOCAB': './mscoco/txt/coco_vocabulary.txt'},
+ 'LOGGER_NAME': 'log',
+ 'LOSSES': {'LABELSMOOTHING': 0.1,
+            'RL_TYPE': 'RewardCriterion',
+            'XE_TYPE': 'LabelSmoothing'},
+ 'MEAN': [0.485, 0.456, 0.406],
+ 'MODEL': {'ATT_ACT': 'TANH',
+           'ATT_FEATS_DIM': 2048,
+           'ATT_FEATS_EMBED_ACT': 'CELU',
+           'ATT_FEATS_EMBED_DIM': 768,
+           'ATT_FEATS_NORM': True,
+           'ATT_HIDDEN_DROP': 0.0,
+           'ATT_HIDDEN_SIZE': -1,
+           'BILINEAR': {'ACT': 'CELU',
+                        'ATTTYPE': 'SCAtt',
+                        'ATT_DIM': 768,
+                        'BIFEAT_EMB_ACT': 'RELU',
+                        'DECODE_ATT_MID_DIM': [96, 48, 96],
+                        'DECODE_ATT_MID_DROPOUT': 0.1,
+                        'DECODE_BIFEAT_EMB_DROPOUT': 0.1,
+                        'DECODE_BLOCK': 'LowRankBilinearDec',
+                        'DECODE_DROPOUT': 0.1,
+                        'DECODE_FF_DROPOUT': 0.5,
+                        'DECODE_LAYERS': 6,
+                        'DIM': 768,
+                        'ELU_ALPHA': 1.3,
+                        'ENCODE_ATT_MID_DIM': [96, 48, 96],
+                        'ENCODE_ATT_MID_DROPOUT': 0.1,
+                        'ENCODE_BIFEAT_EMB_DROPOUT': 0.1,
+                        'ENCODE_BLOCK': 'LowRankBilinearEnc',
+                        'ENCODE_DROPOUT': 0.5,
+                        'ENCODE_FF_DROPOUT': 0.5,
+                        'ENCODE_LAYERS': 6,
+                        'HEAD': 8,
+                        'TYPE': 'LowRank'},
+           'BOTTOM_UP': {'DROPOUT_FIRST_INPUT': 0.0, 'DROPOUT_SEC_INPUT': 0.0},
+           'DROPOUT_ATT_EMBED': 0.5,
+           'DROPOUT_GV_EMBED': 0.0,
+           'DROPOUT_LM': 0.0,
+           'DROPOUT_WORD_EMBED': 0.1,
+           'GVFEAT_DIM': 2048,
+           'GVFEAT_EMBED_ACT': 'NONE',
+           'GVFEAT_EMBED_DIM': -1,
+           'RNN_SIZE': 1024,
+           'SEQ_LEN': 17,
+           'TRANSFORMER': {'PE_MAX_LEN': 5000},
+           'TYPE': 'XTransformer',
+           'VOCAB_SIZE': 9487,
+           'WORD_EMBED_ACT': 'CELU',
+           'WORD_EMBED_DIM': 768,
+           'WORD_EMBED_NORM': False},
+ 'PARAM': {'ADVS': 'ADVS',
+           'ATT_FEATS': 'ATT_FEATS',
+           'ATT_FEATS_MASK': 'ATT_FEATS_MASK',
+           'GEN_RESULT': 'GEN_RESULT',
+           'GLOBAL_FEAT': 'GV_FEAT',
+           'INDICES': 'INDICES',
+           'INPUT_SENT': 'INPUT_SENT',
+           'P_ATT_FEATS': 'P_ATT_FEATS',
+           'SAMPLE_LOGPROBS': 'SAMPLE_LOGPROBS',
+           'STATE': 'STATE',
+           'TARGET_SENT': 'TARGET_SENT',
+           'WT': 'WT'},
+ 'ROOT_DIR': './experiments/y_xtransformer_rl',
+ 'SCORER': {'CIDER_CACHED': './mscoco/misc/coco_train_cider.pkl',
+            'GT_PATH': './mscoco/misc/coco_train_gts.pkl',
+            'TYPES': ['CIDEr'],
+            'WEIGHTS': [1.0]},
+ 'SEED': 1546884941.160048,
+ 'SOLVER': {'ADAM': {'BETAS': [0.9, 0.999], 'EPS': 1e-08},
+            'BASE_LR': 1e-05,
+            'BIAS_LR_FACTOR': 1,
+            'DISPLAY': 20,
+            'GRAD_CLIP': 0.1,
+            'GRAD_CLIP_TYPE': 'Clamp',
+            'LR_POLICY': {'FACTOR': 1.0,
+                          'GAMMA': 0.8,
+                          'MODEL_SIZE': 768,
+                          'PLATEAU_FACTOR': 0.8,
+                          'PLATEAU_PATIENCE': 3,
+                          'SETP_TYPE': 'Epoch',
+                          'STEPS': [3],
+                          'STEP_SIZE': 3,
+                          'TYPE': 'Plateau',
+                          'WARMUP': 10000},
+            'MAX_EPOCH': 60,
+            'MAX_ITER': -1,
+            'SGD': {'MOMENTUM': 0.9},
+            'SNAPSHOT_ITERS': 1,
+            'TEST_INTERVAL': 1,
+            'TYPE': 'RADAM',
+            'WEIGHT_DECAY': 0.0,
+            'WEIGHT_DECAY_BIAS': 0.0},
+ 'STD': [0.229, 0.224, 0.225],
+ 'TEMP_DIR': './data/temp',
+ 'TEST': {'BATCH_SIZE': 36},
+ 'TRAIN': {'BATCH_SIZE': 32,
+           'REINFORCEMENT': {'START': 0},
+           'SCHEDULED_SAMPLING': {'INC_EVERY': 5,
+                                  'INC_PROB': 0.05,
+                                  'MAX_PROB': 0.25,
+                                  'START': 0}}}
+[INFO: 2020-09-06 01:07:09,570] val_current @iteration 0: 1.307807880786779, val_best: 1.307807880786779
+[INFO: 2020-09-06 01:12:26,077] val_current @iteration 100: 1.3066808981817324, val_best: 1.307807880786779
+[INFO: 2020-09-06 01:12:26,078] mv_approxkl: 0.1114386822223886
+[INFO: 2020-09-06 01:12:26,078] beta: 1.8446744073709552e+19
+[INFO: 2020-09-06 01:19:44,062] Training with config:
+[INFO: 2020-09-06 01:19:44,065] {'DATA_LOADER': {'DROP_LAST': True,
+                 'INPUT_SEQ_PATH': './mscoco/sent/coco_train_input.pkl',
+                 'MAX_FEAT': 50,
+                 'NUM_WORKERS': 4,
+                 'PIN_MEMORY': True,
+                 'SEQ_PER_IMG': 5,
+                 'SHUFFLE': True,
+                 'TARGET_SEQ_PATH': './mscoco/sent/coco_train_target.pkl',
+                 'TEST_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'TEST_GV_FEAT': '',
+                 'TEST_ID': './mscoco/txt/coco_test_image_id.txt',
+                 'TRAIN_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'TRAIN_GV_FEAT': '',
+                 'TRAIN_ID': './mscoco/txt/coco_train_image_id.txt',
+                 'VAL_ATT_FEATS': './mscoco/feature/up_down_100',
+                 'VAL_GV_FEAT': '',
+                 'VAL_ID': './mscoco/txt/coco_val_image_id.txt'},
+ 'EPS': 1e-14,
+ 'INFERENCE': {'BEAM_SIZE': 2,
+               'CAP_KEY': 'caption',
+               'COCO_PATH': 'coco-caption',
+               'EVAL': 'COCO',
+               'GREEDY_DECODE': True,
+               'ID_KEY': 'image_id',
+               'TEST_ANNFILE': './mscoco/misc/captions_test5k.json',
+               'VAL_ANNFILE': './mscoco/misc/captions_val5k.json',
+               'VOCAB': './mscoco/txt/coco_vocabulary.txt'},
+ 'LOGGER_NAME': 'log',
+ 'LOSSES': {'LABELSMOOTHING': 0.1,
+            'RL_TYPE': 'RewardCriterion',
+            'XE_TYPE': 'LabelSmoothing'},
+ 'MEAN': [0.485, 0.456, 0.406],
+ 'MODEL': {'ATT_ACT': 'TANH',
+           'ATT_FEATS_DIM': 2048,
+           'ATT_FEATS_EMBED_ACT': 'CELU',
+           'ATT_FEATS_EMBED_DIM': 768,
+           'ATT_FEATS_NORM': True,
+           'ATT_HIDDEN_DROP': 0.0,
+           'ATT_HIDDEN_SIZE': -1,
+           'BILINEAR': {'ACT': 'CELU',
+                        'ATTTYPE': 'SCAtt',
+                        'ATT_DIM': 768,
+                        'BIFEAT_EMB_ACT': 'RELU',
+                        'DECODE_ATT_MID_DIM': [96, 48, 96],
+                        'DECODE_ATT_MID_DROPOUT': 0.1,
+                        'DECODE_BIFEAT_EMB_DROPOUT': 0.1,
+                        'DECODE_BLOCK': 'LowRankBilinearDec',
+                        'DECODE_DROPOUT': 0.1,
+                        'DECODE_FF_DROPOUT': 0.5,
+                        'DECODE_LAYERS': 6,
+                        'DIM': 768,
+                        'ELU_ALPHA': 1.3,
+                        'ENCODE_ATT_MID_DIM': [96, 48, 96],
+                        'ENCODE_ATT_MID_DROPOUT': 0.1,
+                        'ENCODE_BIFEAT_EMB_DROPOUT': 0.1,
+                        'ENCODE_BLOCK': 'LowRankBilinearEnc',
+                        'ENCODE_DROPOUT': 0.5,
+                        'ENCODE_FF_DROPOUT': 0.5,
+                        'ENCODE_LAYERS': 6,
+                        'HEAD': 8,
+                        'TYPE': 'LowRank'},
+           'BOTTOM_UP': {'DROPOUT_FIRST_INPUT': 0.0, 'DROPOUT_SEC_INPUT': 0.0},
+           'DROPOUT_ATT_EMBED': 0.5,
+           'DROPOUT_GV_EMBED': 0.0,
+           'DROPOUT_LM': 0.0,
+           'DROPOUT_WORD_EMBED': 0.1,
+           'GVFEAT_DIM': 2048,
+           'GVFEAT_EMBED_ACT': 'NONE',
+           'GVFEAT_EMBED_DIM': -1,
+           'RNN_SIZE': 1024,
+           'SEQ_LEN': 17,
+           'TRANSFORMER': {'PE_MAX_LEN': 5000},
+           'TYPE': 'XTransformer',
+           'VOCAB_SIZE': 9487,
+           'WORD_EMBED_ACT': 'CELU',
+           'WORD_EMBED_DIM': 768,
+           'WORD_EMBED_NORM': False},
+ 'PARAM': {'ADVS': 'ADVS',
+           'ATT_FEATS': 'ATT_FEATS',
+           'ATT_FEATS_MASK': 'ATT_FEATS_MASK',
+           'GEN_RESULT': 'GEN_RESULT',
+           'GLOBAL_FEAT': 'GV_FEAT',
+           'INDICES': 'INDICES',
+           'INPUT_SENT': 'INPUT_SENT',
+           'P_ATT_FEATS': 'P_ATT_FEATS',
+           'SAMPLE_LOGPROBS': 'SAMPLE_LOGPROBS',
+           'STATE': 'STATE',
+           'TARGET_SENT': 'TARGET_SENT',
+           'WT': 'WT'},
+ 'ROOT_DIR': './experiments/y_xtransformer_rl',
+ 'SCORER': {'CIDER_CACHED': './mscoco/misc/coco_train_cider.pkl',
+            'GT_PATH': './mscoco/misc/coco_train_gts.pkl',
+            'TYPES': ['CIDEr'],
+            'WEIGHTS': [1.0]},
+ 'SEED': 1546884941.160048,
+ 'SOLVER': {'ADAM': {'BETAS': [0.9, 0.999], 'EPS': 1e-08},
+            'BASE_LR': 1e-05,
+            'BIAS_LR_FACTOR': 1,
+            'DISPLAY': 20,
+            'GRAD_CLIP': 0.1,
+            'GRAD_CLIP_TYPE': 'Clamp',
+            'LR_POLICY': {'FACTOR': 1.0,
+                          'GAMMA': 0.8,
+                          'MODEL_SIZE': 768,
+                          'PLATEAU_FACTOR': 0.8,
+                          'PLATEAU_PATIENCE': 3,
+                          'SETP_TYPE': 'Epoch',
+                          'STEPS': [3],
+                          'STEP_SIZE': 3,
+                          'TYPE': 'Plateau',
+                          'WARMUP': 10000},
+            'MAX_EPOCH': 60,
+            'MAX_ITER': -1,
+            'SGD': {'MOMENTUM': 0.9},
+            'SNAPSHOT_ITERS': 1,
+            'TEST_INTERVAL': 1,
+            'TYPE': 'RADAM',
+            'WEIGHT_DECAY': 0.0,
+            'WEIGHT_DECAY_BIAS': 0.0},
+ 'STD': [0.229, 0.224, 0.225],
+ 'TEMP_DIR': './data/temp',
+ 'TEST': {'BATCH_SIZE': 36},
+ 'TRAIN': {'BATCH_SIZE': 32,
+           'REINFORCEMENT': {'START': 0},
+           'SCHEDULED_SAMPLING': {'INC_EVERY': 5,
+                                  'INC_PROB': 0.05,
+                                  'MAX_PROB': 0.25,
+                                  'START': 0}}}
+[INFO: 2020-09-06 01:20:59,349] val_current @iteration 0: 1.307807880786779, val_best: 1.307807880786779
+[INFO: 2020-09-06 01:26:19,304] val_current @iteration 100: 1.3092679532195712, val_best: 1.307807880786779
+[INFO: 2020-09-06 01:26:19,304] mv_approxkl: 0.11007434955450365
+[INFO: 2020-09-06 01:26:19,304] beta: 100
+[INFO: 2020-09-06 01:31:38,286] val_current @iteration 200: 1.30904089981402, val_best: 1.3092679532195712
+[INFO: 2020-09-06 01:31:38,286] mv_approxkl: 0.08728742288939938
+[INFO: 2020-09-06 01:31:38,286] beta: 100
+[INFO: 2020-09-06 01:36:55,579] val_current @iteration 300: 1.305032698945601, val_best: 1.3092679532195712
+[INFO: 2020-09-06 01:36:55,579] mv_approxkl: 0.15064357463277767
+[INFO: 2020-09-06 01:36:55,579] beta: 100
+[INFO: 2020-09-06 01:42:13,046] val_current @iteration 400: 1.305624151048389, val_best: 1.3092679532195712
+[INFO: 2020-09-06 01:42:13,046] mv_approxkl: 0.10430645135401477
+[INFO: 2020-09-06 01:42:13,046] beta: 100
+[INFO: 2020-09-06 01:47:30,916] val_current @iteration 500: 1.307948976917205, val_best: 1.3092679532195712
+[INFO: 2020-09-06 01:47:30,916] mv_approxkl: 0.2793235358522886
+[INFO: 2020-09-06 01:47:30,916] beta: 100
+[INFO: 2020-09-06 01:52:49,898] val_current @iteration 600: 1.3074189046195668, val_best: 1.3092679532195712
+[INFO: 2020-09-06 01:52:49,898] mv_approxkl: 0.1079611352992202
+[INFO: 2020-09-06 01:52:49,899] beta: 100
+[INFO: 2020-09-06 01:58:07,754] val_current @iteration 700: 1.3096435921264522, val_best: 1.3092679532195712
+[INFO: 2020-09-06 01:58:07,755] mv_approxkl: 0.08762969292735226
+[INFO: 2020-09-06 01:58:07,755] beta: 100
+[INFO: 2020-09-06 02:03:26,608] val_current @iteration 800: 1.3087288116720324, val_best: 1.3096435921264522
+[INFO: 2020-09-06 02:03:26,608] mv_approxkl: 0.012445315283844693
+[INFO: 2020-09-06 02:03:26,608] beta: 0.5
+[INFO: 2020-09-06 02:08:44,434] val_current @iteration 900: 1.3091514213760858, val_best: 1.3096435921264522
+[INFO: 2020-09-06 02:08:44,435] mv_approxkl: 0.007188656292152961
+[INFO: 2020-09-06 02:08:44,435] beta: 0.5
+[INFO: 2020-09-06 02:14:02,862] val_current @iteration 1000: 1.3092471868589528, val_best: 1.3096435921264522
+[INFO: 2020-09-06 02:14:02,863] mv_approxkl: 0.01497830572680639
+[INFO: 2020-09-06 02:14:02,863] beta: 0.5
+[INFO: 2020-09-06 02:19:21,051] val_current @iteration 1100: 1.3092474179097267, val_best: 1.3096435921264522
+[INFO: 2020-09-06 02:19:21,051] mv_approxkl: 0.004731912336591968
+[INFO: 2020-09-06 02:19:21,051] beta: 0.5
+[INFO: 2020-09-06 02:24:39,066] val_current @iteration 1200: 1.3092492637098936, val_best: 1.3096435921264522
+[INFO: 2020-09-06 02:24:39,066] mv_approxkl: 0.009355948119416412
+[INFO: 2020-09-06 02:24:39,066] beta: 0.5
+[INFO: 2020-09-06 02:29:58,624] val_current @iteration 1300: 1.3093111219951108, val_best: 1.3096435921264522
+[INFO: 2020-09-06 02:29:58,624] mv_approxkl: 0.012427307457849786
+[INFO: 2020-09-06 02:29:58,624] beta: 0.5
+[INFO: 2020-09-06 02:35:17,266] val_current @iteration 1400: 1.3094366943322333, val_best: 1.3096435921264522
+[INFO: 2020-09-06 02:35:17,266] mv_approxkl: 0.012567205488915253
+[INFO: 2020-09-06 02:35:17,266] beta: 0.5
+[INFO: 2020-09-06 02:40:37,260] val_current @iteration 1500: 1.3092204151759606, val_best: 1.3096435921264522
+[INFO: 2020-09-06 02:40:37,260] mv_approxkl: 0.005077670306890471
+[INFO: 2020-09-06 02:40:37,260] beta: 0.5
+[INFO: 2020-09-06 02:45:56,033] val_current @iteration 1600: 1.3092120575640427, val_best: 1.3096435921264522
+[INFO: 2020-09-06 02:45:56,033] mv_approxkl: 0.004683779203279688
+[INFO: 2020-09-06 02:45:56,033] beta: 0.5
+[INFO: 2020-09-06 02:51:14,515] val_current @iteration 1700: 1.3092512231656894, val_best: 1.3096435921264522
+[INFO: 2020-09-06 02:51:14,515] mv_approxkl: 0.015454829427711219
+[INFO: 2020-09-06 02:51:14,515] beta: 1.0
+[INFO: 2020-09-06 02:56:32,767] val_current @iteration 1800: 1.3092581667754484, val_best: 1.3096435921264522
+[INFO: 2020-09-06 02:56:32,767] mv_approxkl: 0.03075426663398994
+[INFO: 2020-09-06 02:56:32,768] beta: 1.0
+[INFO: 2020-09-06 03:01:51,853] val_current @iteration 1900: 1.3099141463506232, val_best: 1.3096435921264522
+[INFO: 2020-09-06 03:01:51,854] mv_approxkl: 0.01452819569828995
+[INFO: 2020-09-06 03:01:51,854] beta: 0.5
+[INFO: 2020-09-06 03:07:09,555] val_current @iteration 2000: 1.30998852140874, val_best: 1.3099141463506232
+[INFO: 2020-09-06 03:07:09,555] mv_approxkl: 3.8588920105921293e-07
+[INFO: 2020-09-06 03:07:09,555] beta: 0.5
+[INFO: 2020-09-06 03:12:29,167] val_current @iteration 2100: 1.3099575867220075, val_best: 1.30998852140874
+[INFO: 2020-09-06 03:12:29,168] mv_approxkl: 1.024975699574622e-11
+[INFO: 2020-09-06 03:12:29,168] beta: 0.5
+[INFO: 2020-09-06 03:17:51,006] val_current @iteration 2200: 1.3100210069063731, val_best: 1.30998852140874
+[INFO: 2020-09-06 03:17:51,007] mv_approxkl: 2.722478840648561e-16
+[INFO: 2020-09-06 03:17:51,007] beta: 0.5
+[INFO: 2020-09-06 03:23:08,874] val_current @iteration 2300: 1.3095657535435838, val_best: 1.3100210069063731
+[INFO: 2020-09-06 03:23:08,874] mv_approxkl: 7.231284644948329e-21
+[INFO: 2020-09-06 03:23:08,874] beta: 0.5
+[INFO: 2020-09-06 03:28:25,921] val_current @iteration 2400: 1.3093778863663519, val_best: 1.3100210069063731
+[INFO: 2020-09-06 03:28:25,921] mv_approxkl: 0.00038422179414327893
+[INFO: 2020-09-06 03:28:25,921] beta: 0.5
+[INFO: 2020-09-06 03:33:43,746] val_current @iteration 2500: 1.3088860526314285, val_best: 1.3100210069063731
+[INFO: 2020-09-06 03:33:43,747] mv_approxkl: 1.0205468335544176e-08
+[INFO: 2020-09-06 03:33:43,747] beta: 0.5
+[INFO: 2020-09-06 03:39:02,586] val_current @iteration 2600: 1.3090945112307184, val_best: 1.3100210069063731
+[INFO: 2020-09-06 03:39:02,587] mv_approxkl: 0.0012298660820372835
+[INFO: 2020-09-06 03:39:02,587] beta: 0.5
+[INFO: 2020-09-06 03:44:21,721] val_current @iteration 2700: 1.3087214052762488, val_best: 1.3100210069063731
+[INFO: 2020-09-06 03:44:21,721] mv_approxkl: 0.00030650909959269987
+[INFO: 2020-09-06 03:44:21,721] beta: 0.5
+[INFO: 2020-09-06 03:49:39,166] val_current @iteration 2800: 1.3087002591860413, val_best: 1.3100210069063731
+[INFO: 2020-09-06 03:49:39,166] mv_approxkl: 0.00217945520183388
+[INFO: 2020-09-06 03:49:39,166] beta: 0.5
+[INFO: 2020-09-06 03:54:58,574] val_current @iteration 2900: 1.3088867057516858, val_best: 1.3100210069063731
+[INFO: 2020-09-06 03:54:58,575] mv_approxkl: 0.0011244305632486136
+[INFO: 2020-09-06 03:54:58,575] beta: 0.5
+[INFO: 2020-09-06 04:00:17,807] val_current @iteration 3000: 1.3089845277905912, val_best: 1.3100210069063731
+[INFO: 2020-09-06 04:00:17,807] mv_approxkl: 0.010670284687865407
+[INFO: 2020-09-06 04:00:17,807] beta: 0.5
+[INFO: 2020-09-06 04:05:35,344] val_current @iteration 3100: 1.3088673432666973, val_best: 1.3100210069063731
+[INFO: 2020-09-06 04:05:35,344] mv_approxkl: 0.009715330890036055
+[INFO: 2020-09-06 04:05:35,344] beta: 0.5
+[INFO: 2020-09-06 04:10:55,206] val_current @iteration 3200: 1.3090127932119897, val_best: 1.3100210069063731
+[INFO: 2020-09-06 04:10:55,207] mv_approxkl: 0.02141418209121443
+[INFO: 2020-09-06 04:10:55,207] beta: 1.0
+[INFO: 2020-09-06 04:16:13,239] val_current @iteration 3300: 1.3090843367826706, val_best: 1.3100210069063731
+[INFO: 2020-09-06 04:16:13,240] mv_approxkl: 0.0319260500701711
+[INFO: 2020-09-06 04:16:13,240] beta: 1.0
+[INFO: 2020-09-06 04:21:31,584] val_current @iteration 3400: 1.3090923643719992, val_best: 1.3100210069063731
+[INFO: 2020-09-06 04:21:31,584] mv_approxkl: 0.044774827997807916
+[INFO: 2020-09-06 04:21:31,584] beta: 2.0
+[INFO: 2020-09-06 04:26:48,649] val_current @iteration 3500: 1.3091349469633524, val_best: 1.3100210069063731
+[INFO: 2020-09-06 04:26:48,649] mv_approxkl: 0.03302394255098266
+[INFO: 2020-09-06 04:26:48,649] beta: 0.5
+[INFO: 2020-09-06 04:32:13,446] val_current @iteration 3600: 1.308742601380425, val_best: 1.3100210069063731
+[INFO: 2020-09-06 04:32:13,446] mv_approxkl: 0.024915286634053176
+[INFO: 2020-09-06 04:32:13,446] beta: 1.0
+[INFO: 2020-09-06 04:37:31,868] val_current @iteration 3700: 1.3092880775649598, val_best: 1.3100210069063731
+[INFO: 2020-09-06 04:37:31,868] mv_approxkl: 0.06910127187732264
+[INFO: 2020-09-06 04:37:31,868] beta: 8.0
+[INFO: 2020-09-06 04:42:49,641] val_current @iteration 3800: 1.309432834984707, val_best: 1.3100210069063731
+[INFO: 2020-09-06 04:42:49,642] mv_approxkl: 0.06422507443358093
+[INFO: 2020-09-06 04:42:49,642] beta: 4.0
+[INFO: 2020-09-06 04:48:08,161] val_current @iteration 3900: 1.3086853391189543, val_best: 1.3100210069063731
+[INFO: 2020-09-06 04:48:08,161] mv_approxkl: 0.0478368458918778
+[INFO: 2020-09-06 04:48:08,161] beta: 8.0
+[INFO: 2020-09-06 04:53:26,980] val_current @iteration 4000: 1.305596280322069, val_best: 1.3100210069063731
+[INFO: 2020-09-06 04:53:26,980] mv_approxkl: 0.23892951501583617
+[INFO: 2020-09-06 04:53:26,980] beta: 100
+[INFO: 2020-09-06 04:58:45,778] val_current @iteration 4100: 1.3045511415389917, val_best: 1.3100210069063731
+[INFO: 2020-09-06 04:58:45,778] mv_approxkl: 0.18595173783266455
+[INFO: 2020-09-06 04:58:45,778] beta: 100
+[INFO: 2020-09-06 05:04:04,954] val_current @iteration 4200: 1.3049206452628894, val_best: 1.3100210069063731
+[INFO: 2020-09-06 05:04:04,955] mv_approxkl: 0.13620567240822867
+[INFO: 2020-09-06 05:04:04,955] beta: 100
+[INFO: 2020-09-06 05:09:23,094] val_current @iteration 4300: 1.3000233480928662, val_best: 1.3100210069063731
+[INFO: 2020-09-06 05:09:23,094] mv_approxkl: 0.2014228990319604
+[INFO: 2020-09-06 05:09:23,094] beta: 100
+[INFO: 2020-09-06 05:14:41,510] val_current @iteration 4400: 1.3032292476498015, val_best: 1.3100210069063731
+[INFO: 2020-09-06 05:14:41,510] mv_approxkl: 0.15099592984112387
+[INFO: 2020-09-06 05:14:41,510] beta: 100
+[INFO: 2020-09-06 05:20:00,094] val_current @iteration 4500: 1.3059348663343717, val_best: 1.3100210069063731
+[INFO: 2020-09-06 05:20:00,094] mv_approxkl: 0.18549002071417284
+[INFO: 2020-09-06 05:20:00,094] beta: 100
+[INFO: 2020-09-06 05:25:18,640] val_current @iteration 4600: 1.3062417569502796, val_best: 1.3100210069063731
+[INFO: 2020-09-06 05:25:18,640] mv_approxkl: 0.219702614219749
+[INFO: 2020-09-06 05:25:18,641] beta: 100
+[INFO: 2020-09-06 05:30:36,541] val_current @iteration 4700: 1.3045460715705637, val_best: 1.3100210069063731
+[INFO: 2020-09-06 05:30:36,541] mv_approxkl: 0.23985380395140288
+[INFO: 2020-09-06 05:30:36,541] beta: 100
+[INFO: 2020-09-06 05:35:54,089] val_current @iteration 4800: 1.3060634150324253, val_best: 1.3100210069063731
+[INFO: 2020-09-06 05:35:54,089] mv_approxkl: 0.17235181070669445
+[INFO: 2020-09-06 05:35:54,089] beta: 100
+[INFO: 2020-09-06 05:41:11,533] val_current @iteration 4900: 1.3056209160600583, val_best: 1.3100210069063731
+[INFO: 2020-09-06 05:41:11,533] mv_approxkl: 0.18015549577858028
+[INFO: 2020-09-06 05:41:11,533] beta: 100
+[INFO: 2020-09-06 05:46:30,758] val_current @iteration 5000: 1.3076520294369234, val_best: 1.3100210069063731
+[INFO: 2020-09-06 05:46:30,758] mv_approxkl: 0.20245880721098095
+[INFO: 2020-09-06 05:46:30,758] beta: 100
+[INFO: 2020-09-06 05:51:49,063] val_current @iteration 5100: 1.3070749100488517, val_best: 1.3100210069063731
+[INFO: 2020-09-06 05:51:49,064] mv_approxkl: 0.13874849627177224
+[INFO: 2020-09-06 05:51:49,064] beta: 100
+[INFO: 2020-09-06 05:57:08,236] val_current @iteration 5200: 1.3057376498488098, val_best: 1.3100210069063731
+[INFO: 2020-09-06 05:57:08,236] mv_approxkl: 0.841177688408944
+[INFO: 2020-09-06 05:57:08,237] beta: 100
+[INFO: 2020-09-06 06:02:26,380] val_current @iteration 5300: 1.310409422954633, val_best: 1.3100210069063731
+[INFO: 2020-09-06 06:02:26,380] mv_approxkl: 0.1416950798436504
+[INFO: 2020-09-06 06:02:26,381] beta: 100
+[INFO: 2020-09-06 06:07:45,675] val_current @iteration 5400: 1.3091166315145841, val_best: 1.310409422954633
+[INFO: 2020-09-06 06:07:45,676] mv_approxkl: 0.02139130699252322
+[INFO: 2020-09-06 06:07:45,676] beta: 0.5
+[INFO: 2020-09-06 06:13:04,245] val_current @iteration 5500: 1.309071104105517, val_best: 1.310409422954633
+[INFO: 2020-09-06 06:13:04,246] mv_approxkl: 0.03341844713140259
+[INFO: 2020-09-06 06:13:04,246] beta: 4.0
+[INFO: 2020-09-06 06:18:23,624] val_current @iteration 5600: 1.3093581669178904, val_best: 1.310409422954633
+[INFO: 2020-09-06 06:18:23,624] mv_approxkl: 0.05457534989356316
+[INFO: 2020-09-06 06:18:23,625] beta: 1.0
+[INFO: 2020-09-06 06:23:42,869] val_current @iteration 5700: 1.3093788214345334, val_best: 1.310409422954633
+[INFO: 2020-09-06 06:23:42,869] mv_approxkl: 0.023791874575396107
+[INFO: 2020-09-06 06:23:42,869] beta: 1.0
+[INFO: 2020-09-06 06:29:02,423] val_current @iteration 5800: 1.3098252670385866, val_best: 1.310409422954633
+[INFO: 2020-09-06 06:29:02,423] mv_approxkl: 0.021303725968478113
+[INFO: 2020-09-06 06:29:02,423] beta: 0.5
+[INFO: 2020-09-06 06:34:21,420] val_current @iteration 5900: 1.3095956112234748, val_best: 1.310409422954633
+[INFO: 2020-09-06 06:34:21,420] mv_approxkl: 0.006753021054082078
+[INFO: 2020-09-06 06:34:21,420] beta: 0.5
+[INFO: 2020-09-06 06:39:40,216] val_current @iteration 6000: 1.3094251180487562, val_best: 1.310409422954633
+[INFO: 2020-09-06 06:39:40,216] mv_approxkl: 0.004777675139589362
+[INFO: 2020-09-06 06:39:40,216] beta: 0.5
+[INFO: 2020-09-06 06:44:59,297] val_current @iteration 6100: 1.309694101607409, val_best: 1.310409422954633
+[INFO: 2020-09-06 06:44:59,298] mv_approxkl: 0.006919425203417126
+[INFO: 2020-09-06 06:44:59,298] beta: 0.5
+[INFO: 2020-09-06 06:50:18,839] val_current @iteration 6200: 1.3091944162173448, val_best: 1.310409422954633
+[INFO: 2020-09-06 06:50:18,839] mv_approxkl: 0.004629044447418991
+[INFO: 2020-09-06 06:50:18,839] beta: 0.5
+[INFO: 2020-09-06 06:55:38,276] val_current @iteration 6300: 1.309090468090705, val_best: 1.310409422954633
+[INFO: 2020-09-06 06:55:38,276] mv_approxkl: 0.02242474609658357
+[INFO: 2020-09-06 06:55:38,276] beta: 0.5
+[INFO: 2020-09-06 07:00:57,507] val_current @iteration 6400: 1.3094323736226547, val_best: 1.310409422954633
+[INFO: 2020-09-06 07:00:57,508] mv_approxkl: 0.0035808428142545296
+[INFO: 2020-09-06 07:00:57,508] beta: 0.5
+[INFO: 2020-09-06 07:06:16,668] val_current @iteration 6500: 1.3095859431212011, val_best: 1.310409422954633
+[INFO: 2020-09-06 07:06:16,668] mv_approxkl: 0.006409557198728567
+[INFO: 2020-09-06 07:06:16,668] beta: 0.5
+[INFO: 2020-09-06 07:11:35,538] val_current @iteration 6600: 1.3095714367479778, val_best: 1.310409422954633
+[INFO: 2020-09-06 07:11:35,539] mv_approxkl: 0.0031279431395275013
+[INFO: 2020-09-06 07:11:35,539] beta: 0.5
+[INFO: 2020-09-06 07:16:54,474] val_current @iteration 6700: 1.3095889498950817, val_best: 1.310409422954633
+[INFO: 2020-09-06 07:16:54,474] mv_approxkl: 0.00930660099716677
+[INFO: 2020-09-06 07:16:54,474] beta: 1.0
+[INFO: 2020-09-06 07:22:12,727] val_current @iteration 6800: 1.3098621256026195, val_best: 1.310409422954633
+[INFO: 2020-09-06 07:22:12,728] mv_approxkl: 0.005101659192691405
+[INFO: 2020-09-06 07:22:12,728] beta: 0.5
+[INFO: 2020-09-06 07:27:31,381] val_current @iteration 6900: 1.3090276554397224, val_best: 1.310409422954633
+[INFO: 2020-09-06 07:27:31,381] mv_approxkl: 0.012353771430722556
+[INFO: 2020-09-06 07:27:31,381] beta: 0.5
+[INFO: 2020-09-06 07:32:49,932] val_current @iteration 7000: 1.3099918758637716, val_best: 1.310409422954633
+[INFO: 2020-09-06 07:32:49,933] mv_approxkl: 0.003955330196198097
+[INFO: 2020-09-06 07:32:49,933] beta: 0.5
+[INFO: 2020-09-06 07:38:11,651] val_current @iteration 7100: 1.3092062022769435, val_best: 1.310409422954633
+[INFO: 2020-09-06 07:38:11,651] mv_approxkl: 0.004078214051781342
+[INFO: 2020-09-06 07:38:11,651] beta: 0.5
+[INFO: 2020-09-06 07:43:30,776] val_current @iteration 7200: 1.3087357626287373, val_best: 1.310409422954633
+[INFO: 2020-09-06 07:43:30,776] mv_approxkl: 0.020317287886202576
+[INFO: 2020-09-06 07:43:30,777] beta: 0.5
+[INFO: 2020-09-06 07:48:50,577] val_current @iteration 7300: 1.3097021977309544, val_best: 1.310409422954633
+[INFO: 2020-09-06 07:48:50,578] mv_approxkl: 0.06768227661193284
+[INFO: 2020-09-06 07:48:50,578] beta: 2.0
+[INFO: 2020-09-06 07:54:08,666] val_current @iteration 7400: 1.3095825548781985, val_best: 1.310409422954633
+[INFO: 2020-09-06 07:54:08,666] mv_approxkl: 0.004156163200248328
+[INFO: 2020-09-06 07:54:08,666] beta: 0.5
+[INFO: 2020-09-06 07:59:26,531] val_current @iteration 7500: 1.3095325467544503, val_best: 1.310409422954633
+[INFO: 2020-09-06 07:59:26,531] mv_approxkl: 0.0072438488995962575
+[INFO: 2020-09-06 07:59:26,531] beta: 0.5
+[INFO: 2020-09-06 08:04:44,763] val_current @iteration 7600: 1.309674536189667, val_best: 1.310409422954633
+[INFO: 2020-09-06 08:04:44,763] mv_approxkl: 0.005230349635091878
+[INFO: 2020-09-06 08:04:44,763] beta: 0.5
+[INFO: 2020-09-06 08:10:03,192] val_current @iteration 7700: 1.3085195281427575, val_best: 1.310409422954633
+[INFO: 2020-09-06 08:10:03,192] mv_approxkl: 0.0062919734248898865
+[INFO: 2020-09-06 08:10:03,192] beta: 0.5
+[INFO: 2020-09-06 08:15:23,364] val_current @iteration 7800: 1.3096614821728905, val_best: 1.310409422954633
+[INFO: 2020-09-06 08:15:23,364] mv_approxkl: 0.06444745090786701
+[INFO: 2020-09-06 08:15:23,364] beta: 0.5
+[INFO: 2020-09-06 08:18:39,154] ######## Epoch 1 ########
+[INFO: 2020-09-06 08:18:39,154] {'CIDEr': 1.2942177140616893}
+[INFO: 2020-09-06 08:20:47,674] ######## Epoch 2 ########
+[INFO: 2020-09-06 08:20:47,674] {'CIDEr': 1.292547860416373}
+[INFO: 2020-09-06 08:21:23,161] val_current @iteration 7900: 1.3101834893186042, val_best: 1.310409422954633
+[INFO: 2020-09-06 08:21:23,161] mv_approxkl: 0.009528151246038145
+[INFO: 2020-09-06 08:21:23,161] beta: 0.5
+[INFO: 2020-09-06 08:26:53,063] val_current @iteration 8000: 1.310110459012114, val_best: 1.310409422954633
+[INFO: 2020-09-06 08:26:53,063] mv_approxkl: 0.013843287164573542
+[INFO: 2020-09-06 08:26:53,063] beta: 0.5
+[INFO: 2020-09-06 08:27:14,253] ######## Epoch 4001 ########
+[INFO: 2020-09-06 08:27:14,253] {'CIDEr': 1.3010348476967275}
+[INFO: 2020-09-06 08:32:14,104] val_current @iteration 8100: 1.3096677370717331, val_best: 1.310409422954633
+[INFO: 2020-09-06 08:32:14,104] mv_approxkl: 0.004169078770744573
+[INFO: 2020-09-06 08:32:14,104] beta: 0.5
+[INFO: 2020-09-06 08:37:32,640] val_current @iteration 8200: 1.3092268975885053, val_best: 1.310409422954633
+[INFO: 2020-09-06 08:37:32,640] mv_approxkl: 0.011369240693434923
+[INFO: 2020-09-06 08:37:32,640] beta: 0.5
+[INFO: 2020-09-06 08:42:51,515] val_current @iteration 8300: 1.3094164895372957, val_best: 1.310409422954633
+[INFO: 2020-09-06 08:42:51,515] mv_approxkl: 0.01596215757415403
+[INFO: 2020-09-06 08:42:51,516] beta: 0.5
+[INFO: 2020-09-06 08:48:10,552] val_current @iteration 8400: 1.3093517958031384, val_best: 1.310409422954633
+[INFO: 2020-09-06 08:48:10,552] mv_approxkl: 0.01584693107936305
+[INFO: 2020-09-06 08:48:10,552] beta: 0.5
+[INFO: 2020-09-06 08:53:30,644] val_current @iteration 8500: 1.3097734775969723, val_best: 1.310409422954633
+[INFO: 2020-09-06 08:53:30,644] mv_approxkl: 0.020565291720030954
+[INFO: 2020-09-06 08:53:30,644] beta: 0.5
+[INFO: 2020-09-06 08:58:49,997] val_current @iteration 8600: 1.310720687869607, val_best: 1.310409422954633
+[INFO: 2020-09-06 08:58:49,997] mv_approxkl: 0.0260297277660924
+[INFO: 2020-09-06 08:58:49,997] beta: 1.0
+[INFO: 2020-09-06 09:04:08,332] val_current @iteration 8700: 1.3098182306478965, val_best: 1.310720687869607
+[INFO: 2020-09-06 09:04:08,332] mv_approxkl: 0.004359564867546355
+[INFO: 2020-09-06 09:04:08,332] beta: 0.5
+[INFO: 2020-09-06 09:09:27,964] val_current @iteration 8800: 1.309748386077773, val_best: 1.310720687869607
+[INFO: 2020-09-06 09:09:27,964] mv_approxkl: 0.0029858320273038756
+[INFO: 2020-09-06 09:09:27,964] beta: 0.5
+[INFO: 2020-09-06 09:14:46,665] val_current @iteration 8900: 1.3101299120669876, val_best: 1.310720687869607
+[INFO: 2020-09-06 09:14:46,665] mv_approxkl: 0.0013221189618090618
+[INFO: 2020-09-06 09:14:46,665] beta: 0.5
+[INFO: 2020-09-06 09:20:05,560] val_current @iteration 9000: 1.3100087703191536, val_best: 1.310720687869607
+[INFO: 2020-09-06 09:20:05,560] mv_approxkl: 0.01627693798529977
+[INFO: 2020-09-06 09:20:05,560] beta: 0.5
+[INFO: 2020-09-06 09:25:24,006] val_current @iteration 9100: 1.3107174522147744, val_best: 1.310720687869607
+[INFO: 2020-09-06 09:25:24,006] mv_approxkl: 0.0009106966345346434
+[INFO: 2020-09-06 09:25:24,007] beta: 0.5
+[INFO: 2020-09-06 09:30:42,937] val_current @iteration 9200: 1.3089610790625952, val_best: 1.310720687869607
+[INFO: 2020-09-06 09:30:42,938] mv_approxkl: 6.729055926183476e-05
+[INFO: 2020-09-06 09:30:42,938] beta: 0.5
+[INFO: 2020-09-06 09:36:02,343] val_current @iteration 9300: 1.3088114893999059, val_best: 1.310720687869607
+[INFO: 2020-09-06 09:36:02,343] mv_approxkl: 0.0005691081295609658
+[INFO: 2020-09-06 09:36:02,343] beta: 0.5
+[INFO: 2020-09-06 09:41:22,154] val_current @iteration 9400: 1.308632786556059, val_best: 1.310720687869607
+[INFO: 2020-09-06 09:41:22,154] mv_approxkl: 0.012337316985318349
+[INFO: 2020-09-06 09:41:22,154] beta: 0.5
+[INFO: 2020-09-06 09:46:41,193] val_current @iteration 9500: 1.3093425169255768, val_best: 1.310720687869607
+[INFO: 2020-09-06 09:46:41,193] mv_approxkl: 0.00632833468103452
+[INFO: 2020-09-06 09:46:41,194] beta: 0.5
+[INFO: 2020-09-06 09:51:58,368] val_current @iteration 9600: 1.3092199407531007, val_best: 1.310720687869607
+[INFO: 2020-09-06 09:51:58,368] mv_approxkl: 0.008071795492913897
+[INFO: 2020-09-06 09:51:58,368] beta: 0.5
+[INFO: 2020-09-06 09:57:16,572] val_current @iteration 9700: 1.3093089903498694, val_best: 1.310720687869607
+[INFO: 2020-09-06 09:57:16,572] mv_approxkl: 0.00593566104711203
+[INFO: 2020-09-06 09:57:16,572] beta: 0.5
