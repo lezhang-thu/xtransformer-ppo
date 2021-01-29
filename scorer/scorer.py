@@ -10,6 +10,7 @@ factory = {
     'CIDEr': Cider,
 }
 
+
 def get_sents(sent):
     words = []
     for word in sent:
@@ -18,12 +19,14 @@ def get_sents(sent):
             break
     return words
 
+
 class Scorer(object):
     def __init__(self):
         super(Scorer, self).__init__()
         self.scorers = []
         self.weights = cfg.SCORER.WEIGHTS
-        self.gts = pickle.load(open(cfg.SCORER.GT_PATH, 'rb'), encoding='bytes')
+        self.gts = pickle.load(open(cfg.SCORER.GT_PATH, 'rb'),
+                               encoding='bytes')
         for name in cfg.SCORER.TYPES:
             self.scorers.append(factory[name]())
 

@@ -8,21 +8,16 @@ from optimizer.radam import RAdam, AdamW
 
 
 class Optimizer(nn.Module):
-    def __init__(self, model, bn):
+    def __init__(self, model):
         super(Optimizer, self).__init__()
-        self.setup_optimizer(model, bn)
+        self.setup_optimizer(model)
 
-    def setup_optimizer(self, model, bn):
-        if True:
-            self.optimizer = torch.optim.AdamW(model.parameters(),
-                                               weight_decay=1e-4,
-                                               lr=5e-6)
-            #self.optimizer = torch.optim.Adam(model.parameters(), lr=5e-6)
-            self.scheduler = None
-            print("To smile :)")
-            import time
-            time.sleep(1)
-            return
+    def setup_optimizer(self, model):
+        self.optimizer = torch.optim.AdamW(model.parameters(),
+                                           weight_decay=1e-4,
+                                           lr=5e-6)
+        self.scheduler = None
+        return
 
         params = []
         for key, value in model.named_parameters():

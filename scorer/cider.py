@@ -1,6 +1,6 @@
 # Filename: cider.py
 #
-# Description: Describes the class to compute the CIDEr (Consensus-Based Image Description Evaluation) Metric 
+# Description: Describes the class to compute the CIDEr (Consensus-Based Image Description Evaluation) Metric
 #               by Vedantam, Zitnick, and Parikh (http://arxiv.org/abs/1411.5726)
 #
 # Creation Date: Sun Feb  8 14:16:54 2015
@@ -11,6 +11,7 @@ from __future__ import division
 from __future__ import print_function
 
 from scorer.cider_scorer import CiderScorer
+
 
 class Cider:
     """
@@ -41,8 +42,8 @@ class Cider:
             # Sanity check.
             #assert(type(hypo) is list)
             #assert(len(hypo) == 1)
-            assert(type(ref) is list)
-            assert(len(ref) > 0)
+            assert (type(ref) is list)
+            assert (len(ref) > 0)
 
             self.cider_scorer += (hypo, ref)
 
@@ -51,4 +52,4 @@ class Cider:
         return score, scores
 
     def method(self):
-        return "CIDEr"    
+        return "CIDEr"

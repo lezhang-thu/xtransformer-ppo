@@ -4,12 +4,16 @@ import torch.nn.functional as F
 from lib.config import cfg
 import lib.utils as utils
 
+
 class Attention(nn.Module):
     def __init__(self):
         super(Attention, self).__init__()
-        self.Wah = nn.Linear(cfg.MODEL.RNN_SIZE, cfg.MODEL.ATT_HIDDEN_SIZE, bias=False)
+        self.Wah = nn.Linear(cfg.MODEL.RNN_SIZE,
+                             cfg.MODEL.ATT_HIDDEN_SIZE,
+                             bias=False)
         self.alpha = nn.Linear(cfg.MODEL.ATT_HIDDEN_SIZE, 1, bias=False)
-        self.dropout = nn.Dropout(cfg.MODEL.ATT_HIDDEN_DROP) if cfg.MODEL.ATT_HIDDEN_DROP > 0 else None
+        self.dropout = nn.Dropout(cfg.MODEL.ATT_HIDDEN_DROP
+                                  ) if cfg.MODEL.ATT_HIDDEN_DROP > 0 else None
 
         if cfg.MODEL.ATT_ACT == 'RELU':
             self.act = nn.ReLU()

@@ -7,6 +7,7 @@ import argparse
 import pickle
 from collections import defaultdict
 
+
 def precook(words, n=4, out=False):
     """
     Takes a string as input and returns an object that can be given to
@@ -17,13 +18,14 @@ def precook(words, n=4, out=False):
     :return: term frequency vector for occuring ngrams
     """
     counts = defaultdict(int)
-    for k in range(1,n+1):
-        for i in range(len(words)-k+1):
-            ngram = tuple(words[i:i+k])
+    for k in range(1, n + 1):
+        for i in range(len(words) - k + 1):
+            ngram = tuple(words[i:i + k])
             counts[ngram] += 1
     return counts
 
-def cook_refs(refs, n=4): ## lhuang: oracle will call with "average"
+
+def cook_refs(refs, n=4):  ## lhuang: oracle will call with "average"
     '''Takes a list of reference sentences for a single segment
     and returns an object that encapsulates everything that BLEU
     needs to know about them.
@@ -32,6 +34,7 @@ def cook_refs(refs, n=4): ## lhuang: oracle will call with "average"
     :return: result (list of dict)
     '''
     return [precook(ref, n) for ref in refs]
+
 
 def cook_test(test, n=4):
     '''Takes a test sentence and returns an object that
@@ -42,6 +45,7 @@ def cook_test(test, n=4):
     '''
     return precook(test, n, True)
 
+
 def remove_ignore(seq):
     sent = []
     for word in seq:
@@ -49,6 +53,7 @@ def remove_ignore(seq):
             break
         sent.append(word)
     return sent
+
 
 def main(args):
     gts = []
@@ -72,20 +77,36 @@ def main(args):
     document_frequency = defaultdict(float)
     for refs in crefs:
         # refs, k ref captions of one image
-        for ngram in set([ngram for ref in refs for (ngram,count) in ref.items()]):
+        for ngram in set(
+            [ngram for ref in refs for (ngram, count) in ref.items()]):
             document_frequency[ngram] += 1
     ref_len = np.log(float(len(crefs)))
-    pickle.dump({ 'document_frequency': document_frequency, 'ref_len': ref_len }, open(args.outfile, 'wb'))
+    pickle.dump({
+        'document_frequency': document_frequency,
+        'ref_len': ref_len
+    }, open(args.outfile, 'wb'))
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     # input h5
-    parser.add_argument('--infile', default='./mscoco/sent/coco_train_target.pkl', help='pkl file', type=str)
-    parser.add_argument('--outfile', default='./mscoco/misc/coco_train_cider.pkl', help='output pickle file', type=str)
-    parser.add_argument('--gts', default='./mscoco/misc/coco_train_gts.pkl', help='output pickle file', type=str)
-    parser.add_argument('--image_ids', default='./mscoco/txt/coco_train_image_id.txt', help='image id file', type=str)
+    parser.add_argument('--infile',
+                        default='./mscoco/sent/coco_train_target.pkl',
+                        help='pkl file',
+                        type=str)
+    parser.add_argument('--outfile',
+                        default='./mscoco/misc/coco_train_cider.pkl',
+                        help='output pickle file',
+                        type=str)
+    parser.add_argument('--gts',
+                        default='./mscoco/misc/coco_train_gts.pkl',
+                        help='output pickle file',
+                        type=str)
+    parser.add_argument('--image_ids',
+                        default='./mscoco/txt/coco_train_image_id.txt',
+                        help='image id file',
+                        type=str)
 
     args = parser.parse_args()
     main(args)

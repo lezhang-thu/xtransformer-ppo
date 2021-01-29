@@ -6,8 +6,10 @@ __factory = {
     'Noam': NoamLR,
 }
 
+
 def names():
     return sorted(__factory.keys())
+
 
 def create(name, optimizer, *args, **kwargs):
     if name not in __factory:

@@ -8,8 +8,10 @@ __factory = {
     'SCAtt': SCAtt,
 }
 
+
 def names():
     return sorted(__factory.keys())
+
 
 def create(name, *args, **kwargs):
     if name not in __factory:

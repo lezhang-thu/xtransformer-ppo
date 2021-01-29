@@ -1,73 +1,42 @@
 # Introduction
-This repository is for **X-Linear Attention Networks for Image Captioning** (CVPR 2020). The original paper can be found [here](https://arxiv.org/pdf/2003.14080.pdf).
+This repository is for **Image Captioning via Proximal Policy Optimization**.
 
-Please cite with the following BibTeX:
+It is based on [JDAI-CV / image-captioning](https://github.com/JDAI-CV/image-captioning). 
 
-```
-@inproceedings{xlinear2020cvpr,
-  title={X-Linear Attention Networks for Image Captioning},
-  author={Pan, Yingwei and Yao, Ting and Li, Yehao and Mei, Tao},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  year={2020}
-}
-```
+Please follow the same data preparation as in the repository above.
+Basically PPO ([Proximal Policy Optimization](https://arxiv.org/abs/1707.06347)) is used instead of the generally adopted 
+[self-critical training](https://arxiv.org/abs/1612.00563).
+The point of using PPO is its capability of enforcing trust-region constraints.
+So there can be separate models for the predictor and the trainer.
+The trainer is allowed the opportunity to observe various enough images and feedbacks
+of CIDEr scores before substituting the predictor for generating training trajectories.
+Also, in the gradient estimator of the algorithm, a word-level baseline via Monte-Carlo estimation
+is implemented for replacing the sentence-level baseline, for which all words have the same baseline value. 
 
-<p align="center">
-  <img src="images/framework.jpg" width="800"/>
-</p>
+A pre-trained model can be downloaded [here](https://drive.google.com/file/d/1XR_Sf3c1M0UNdyMx1fWJm3g4sFYWFjnD/view?usp=sharing). 
 
-
-## Requirements
-* Python 3
-* CUDA 10
-* numpy
-* tqdm
-* easydict
-* [PyTorch](http://pytorch.org/) (>1.0)
-* [torchvision](http://pytorch.org/)
-* [coco-caption](https://github.com/ruotianluo/coco-caption)
-
-## Data preparation
-1. Download the [bottom up features](https://github.com/peteanderson80/bottom-up-attention) and convert them to npz files
-```
-python2 tools/create_feats.py --infeats bottom_up_tsv --outfolder ./mscoco/feature/up_down_10_100
-```
-
-2. Download the [annotations](https://drive.google.com/open?id=1i5YJRSZtpov0nOtRyfM0OS1n0tPCGiCS) into the mscoco folder. More details about data preparation can be referred to [self-critical.pytorch](https://github.com/ruotianluo/self-critical.pytorch)
-
-3. Download [coco-caption](https://github.com/ruotianluo/coco-caption) and setup the path of __C.INFERENCE.COCO_PATH in lib/config.py
-
-4. The pretrained models and results can be downloaded [here](https://drive.google.com/open?id=1a7aINHtpQbIw5JbAc4yvC7I1V-tQSdzb).
-
-5. The pretrained SENet-154 model can be downloaded [here](https://drive.google.com/file/d/1CrWJcdKLPmFYVdVNcQLviwKGtAREjarR/view?usp=sharing).
+(This model achieve a CIDEr score of
+133.3% on the MSCOCO Karpathy test set, for which X-Transformer in [JDAI-CV / image-captioning](https://github.com/JDAI-CV/image-captioning) obtains 132.8%.)
 
 ## Training
-### Train X-LAN model
-```
-bash experiments/xlan/train.sh
-```
 
-### Train X-LAN model using self critical
-Copy the pretrained model into experiments/xlan_rl/snapshot and run the script
-```
-bash experiments/xlan_rl/train.sh
-```
+The training is nearly the same as in [JDAI-CV / image-captioning](https://github.com/JDAI-CV/image-captioning).
+However, we directly fine-tune over a pre-trained X-Transformer [model](https://drive.google.com/file/d/1a7aINHtpQbIw5JbAc4yvC7I1V-tQSdzb/view)
+for the sake of computing resources.
 
-### Train X-LAN transformer model
-```
-bash experiments/xtransformer/train.sh
-```
-
-### Train X-LAN transformer model using self critical
-Copy the pretrained model into experiments/xtransformer_rl/snapshot and run the script
+### Train using PPO
+Copy the pre-trained X-Transformer model into experiments/xtransformer_rl/snapshot and run the script
 ```
 bash experiments/xtransformer_rl/train.sh
 ```
 
 ## Evaluation
 ```
-CUDA_VISIBLE_DEVICES=0 python3 main_test.py --folder experiments/model_folder --resume model_epoch
+CUDA_VISIBLE_DEVICES=0 python3 main_test.py --folder experiments/xtransformer_rl --resume 23
 ```
+where the number 23 is since the checkpoint with the best performance on the Karpathy validation set
+is saved as `caption_model_23.pth`.
 
 ## Acknowledgements
-Thanks the contribution of [self-critical.pytorch](https://github.com/ruotianluo/self-critical.pytorch) and awesome PyTorch team.
+Thanks the contribution of [JDAI-CV / image-captioning](https://github.com/JDAI-CV/image-captioning) and 
+[self-critical.pytorch](https://github.com/ruotianluo/self-critical.pytorch).

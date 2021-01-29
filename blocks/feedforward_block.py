@@ -3,9 +3,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 import lib.utils as utils
 
+
 class FeedForwardBlock(nn.Module):
-    def __init__(self, embed_dim, ffn_embed_dim, 
-        relu_dropout, dropout):
+    def __init__(self, embed_dim, ffn_embed_dim, relu_dropout, dropout):
         super(FeedForwardBlock, self).__init__()
         self.fc1 = nn.Linear(embed_dim, ffn_embed_dim)
         self.fc2 = nn.Linear(ffn_embed_dim, embed_dim)

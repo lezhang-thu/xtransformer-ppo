@@ -41,7 +41,6 @@ __C.TEST = edict()
 # Minibatch size
 __C.TEST.BATCH_SIZE = 36
 
-
 # ---------------------------------------------------------------------------- #
 # Data loader options
 # ---------------------------------------------------------------------------- #
@@ -87,15 +86,15 @@ __C.DATA_LOADER.MAX_FEAT = -1
 # ---------------------------------------------------------------------------- #
 __C.MODEL = edict()
 
-__C.MODEL.TYPE = 'UpDown'               # 'UpDown', 'XLAN', 'XTransformer'
+__C.MODEL.TYPE = 'UpDown'  # 'UpDown', 'XLAN', 'XTransformer'
 
-__C.MODEL.SEQ_LEN = 17                  # include <EOS>/<BOS>
+__C.MODEL.SEQ_LEN = 17  # include <EOS>/<BOS>
 
-__C.MODEL.VOCAB_SIZE = 9487             # exclude <EOS>/<BOS>
+__C.MODEL.VOCAB_SIZE = 9487  # exclude <EOS>/<BOS>
 
 __C.MODEL.WORD_EMBED_DIM = 1000
 
-__C.MODEL.WORD_EMBED_ACT = 'NONE'       # 'RELU', 'CELU', 'NONE'
+__C.MODEL.WORD_EMBED_ACT = 'NONE'  # 'RELU', 'CELU', 'NONE'
 
 __C.MODEL.WORD_EMBED_NORM = False
 
@@ -105,7 +104,7 @@ __C.MODEL.GVFEAT_DIM = 2048
 
 __C.MODEL.GVFEAT_EMBED_DIM = -1
 
-__C.MODEL.GVFEAT_EMBED_ACT = 'NONE'     # 'RELU', 'CELU', 'NONE'
+__C.MODEL.GVFEAT_EMBED_ACT = 'NONE'  # 'RELU', 'CELU', 'NONE'
 
 __C.MODEL.DROPOUT_GV_EMBED = 0.0
 
@@ -113,7 +112,7 @@ __C.MODEL.ATT_FEATS_DIM = 2048
 
 __C.MODEL.ATT_FEATS_EMBED_DIM = -1
 
-__C.MODEL.ATT_FEATS_EMBED_ACT = 'NONE'   # 'RELU', 'CELU', 'NONE'
+__C.MODEL.ATT_FEATS_EMBED_ACT = 'NONE'  # 'RELU', 'CELU', 'NONE'
 
 __C.MODEL.DROPOUT_ATT_EMBED = 0.0
 
@@ -140,7 +139,6 @@ __C.MODEL.BOTTOM_UP.DROPOUT_SEC_INPUT = 0.0
 __C.MODEL.TRANSFORMER = edict()
 
 __C.MODEL.TRANSFORMER.PE_MAX_LEN = 5000
-
 
 # Bilinear
 __C.MODEL.BILINEAR = edict()
@@ -198,16 +196,16 @@ __C.SOLVER = edict()
 __C.SOLVER.BASE_LR = 0.0005
 
 # Solver type
-__C.SOLVER.TYPE = 'ADAM'                 # 'ADAM', 'ADAMAX', 'SGD', 'ADAGRAD', 'RMSPROP', 'RADAM'
+__C.SOLVER.TYPE = 'ADAM'  # 'ADAM', 'ADAMAX', 'SGD', 'ADAGRAD', 'RMSPROP', 'RADAM'
 
 # Maximum number of SGD iterations
 __C.SOLVER.MAX_EPOCH = 30
 
 __C.SOLVER.MAX_ITER = 60000
 
-__C.SOLVER.GRAD_CLIP = 0.1               # Norm:0.5 , Clamp:0.1
+__C.SOLVER.GRAD_CLIP = 0.1  # Norm:0.5 , Clamp:0.1
 
-__C.SOLVER.GRAD_CLIP_TYPE = 'Clamp'      # 'Clamp', 'Norm'
+__C.SOLVER.GRAD_CLIP_TYPE = 'Clamp'  # 'Clamp', 'Norm'
 
 # L2 regularization hyperparameter
 __C.SOLVER.WEIGHT_DECAY = 0.0005
@@ -235,15 +233,17 @@ __C.SOLVER.ADAM.EPS = 1e-8
 # Schedule type (see functions in utils.lr_policy for options)
 # E.g., 'step', 'steps_with_decay', ...
 __C.SOLVER.LR_POLICY = edict()
-__C.SOLVER.LR_POLICY.TYPE = 'Step'       # 'Fix', 'Step', 'Noam', 'Plateau'
-__C.SOLVER.LR_POLICY.GAMMA = 0.8         # For 'step', the current LR is multiplied by SOLVER.GAMMA at each step
-__C.SOLVER.LR_POLICY.STEP_SIZE = 3       # Uniform step size for 'steps' policy
-__C.SOLVER.LR_POLICY.STEPS = (3,)        # Non-uniform step iterations for 'steps_with_decay' or 'steps_with_lrs' policies
-__C.SOLVER.LR_POLICY.SETP_TYPE = 'Epoch' # 'Epoch', 'Iter'
+__C.SOLVER.LR_POLICY.TYPE = 'Step'  # 'Fix', 'Step', 'Noam', 'Plateau'
+__C.SOLVER.LR_POLICY.GAMMA = 0.8  # For 'step', the current LR is multiplied by SOLVER.GAMMA at each step
+__C.SOLVER.LR_POLICY.STEP_SIZE = 3  # Uniform step size for 'steps' policy
+__C.SOLVER.LR_POLICY.STEPS = (
+    3,
+)  # Non-uniform step iterations for 'steps_with_decay' or 'steps_with_lrs' policies
+__C.SOLVER.LR_POLICY.SETP_TYPE = 'Epoch'  # 'Epoch', 'Iter'
 
-__C.SOLVER.LR_POLICY.WARMUP = 20000      # For Noam only
-__C.SOLVER.LR_POLICY.FACTOR = 1.0        # For Noam only
-__C.SOLVER.LR_POLICY.MODEL_SIZE = 1024   # For Noam only
+__C.SOLVER.LR_POLICY.WARMUP = 20000  # For Noam only
+__C.SOLVER.LR_POLICY.FACTOR = 1.0  # For Noam only
+__C.SOLVER.LR_POLICY.MODEL_SIZE = 1024  # For Noam only
 
 __C.SOLVER.LR_POLICY.PLATEAU_FACTOR = 0.5
 __C.SOLVER.LR_POLICY.PLATEAU_PATIENCE = 3
@@ -253,7 +253,7 @@ __C.SOLVER.LR_POLICY.PLATEAU_PATIENCE = 3
 # ---------------------------------------------------------------------------- #
 __C.LOSSES = edict()
 
-__C.LOSSES.XE_TYPE = 'CrossEntropy'      # 'CrossEntropy', 'LabelSmoothing'
+__C.LOSSES.XE_TYPE = 'CrossEntropy'  # 'CrossEntropy', 'LabelSmoothing'
 
 __C.LOSSES.RL_TYPE = 'RewardCriterion'
 
@@ -322,7 +322,7 @@ __C.INFERENCE.TEST_ANNFILE = 'captions_test5k.json'
 
 __C.INFERENCE.BEAM_SIZE = 1
 
-__C.INFERENCE.GREEDY_DECODE = True # Greedy decode or sample decode
+__C.INFERENCE.GREEDY_DECODE = True  # Greedy decode or sample decode
 
 __C.INFERENCE.COCO_PATH = 'coco-caption'
 
@@ -348,6 +348,7 @@ __C.SEED = -1.0
 
 __C.TEMP_DIR = './data/temp'
 
+
 def _merge_a_into_b(a, b):
     """Merge config dictionary a into config dictionary b, clobbering the
     options in b whenever they are also specified in a.
@@ -356,7 +357,7 @@ def _merge_a_into_b(a, b):
         return
 
     #for k, v in a.iteritems(): python2
-    for k, v in a.items(): # python3
+    for k, v in a.items():  # python3
         # a must specify keys that are in b
         #if not b.has_key(k):
         if not k in b:
@@ -368,9 +369,9 @@ def _merge_a_into_b(a, b):
             if isinstance(b[k], np.ndarray):
                 v = np.array(v, dtype=b[k].dtype)
             else:
-                raise ValueError(('Type mismatch ({} vs. {}) '
-                                'for config key: {}').format(type(b[k]),
-                                                            type(v), k))
+                raise ValueError(
+                    ('Type mismatch ({} vs. {}) '
+                     'for config key: {}').format(type(b[k]), type(v), k))
 
         # recursively merge dicts
         if type(v) is edict:
@@ -381,6 +382,7 @@ def _merge_a_into_b(a, b):
                 raise
         else:
             b[k] = v
+
 
 def cfg_from_file(filename):
     """Load a config file and merge it into the default options."""

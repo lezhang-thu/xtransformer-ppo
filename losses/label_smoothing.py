@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from lib.config import cfg
 
+
 class LabelSmoothing(nn.Module):
     def __init__(self):
         super(LabelSmoothing, self).__init__()
@@ -13,7 +14,7 @@ class LabelSmoothing(nn.Module):
         self.criterion = nn.KLDivLoss(reduction='none')
 
     def forward(self, logit, target_seq):
-        logP = F.log_softmax(logit.view(-1, logit.shape[-1]), dim=-1) 
+        logP = F.log_softmax(logit.view(-1, logit.shape[-1]), dim=-1)
         target_seq = target_seq.view(-1)
         mask = target_seq >= 0
 
@@ -27,4 +28,3 @@ class LabelSmoothing(nn.Module):
         loss = self.criterion(logP, true_dist).sum(1)
         loss = torch.masked_select(loss, mask).mean()
         return loss, {'LabelSmoothing Loss': loss.item()}
-

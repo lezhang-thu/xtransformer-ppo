@@ -22,6 +22,16 @@ from optimizer.optimizer import Optimizer
 from evaluation.evaler import Evaler
 from scorer.scorer import Scorer
 from lib.config import cfg, cfg_from_file
+from fvcore.common.checkpoint import Checkpointer
+
+
+class CaptionCheckpointer(Checkpointer):
+    def _load_file(self, filename):
+        loaded = super()._load_file(filename)  # load native pth checkpoint
+        if "model" not in loaded:
+            loaded = {"model": loaded}
+        return loaded
+
 
 class Tester(object):
     def __init__(self, args):
@@ -31,54 +41,50 @@ class Tester(object):
 
         self.setup_logging()
         self.setup_network()
-        self.evaler = Evaler(
-            eval_ids = cfg.DATA_LOADER.TEST_ID,
-            gv_feat = cfg.DATA_LOADER.TEST_GV_FEAT,
-            att_feats = cfg.DATA_LOADER.TEST_ATT_FEATS,
-            eval_annfile = cfg.INFERENCE.TEST_ANNFILE
-        )
-
-        #self.evaler = Evaler(eval_ids=cfg.DATA_LOADER.VAL_ID,
-        #                         gv_feat=cfg.DATA_LOADER.VAL_GV_FEAT,
-        #                         att_feats=cfg.DATA_LOADER.VAL_ATT_FEATS,
-        #                         eval_annfile=cfg.INFERENCE.VAL_ANNFILE)
+        self.evaler = Evaler(eval_ids=cfg.DATA_LOADER.TEST_ID,
+                             gv_feat=cfg.DATA_LOADER.TEST_GV_FEAT,
+                             att_feats=cfg.DATA_LOADER.TEST_ATT_FEATS,
+                             eval_annfile=cfg.INFERENCE.TEST_ANNFILE)
 
     def setup_logging(self):
         self.logger = logging.getLogger(cfg.LOGGER_NAME)
         self.logger.setLevel(logging.INFO)
-        
+
         ch = logging.StreamHandler(stream=sys.stdout)
         ch.setLevel(logging.INFO)
-        formatter = logging.Formatter("[%(levelname)s: %(asctime)s] %(message)s")
+        formatter = logging.Formatter(
+            "[%(levelname)s: %(asctime)s] %(message)s")
         ch.setFormatter(formatter)
         self.logger.addHandler(ch)
 
         if not os.path.exists(cfg.ROOT_DIR):
             os.makedirs(cfg.ROOT_DIR)
-        
-        fh = logging.FileHandler(os.path.join(cfg.ROOT_DIR, cfg.LOGGER_NAME + '.txt'))
+
+        fh = logging.FileHandler(
+            os.path.join(cfg.ROOT_DIR, cfg.LOGGER_NAME + '.txt'))
         fh.setLevel(logging.INFO)
         fh.setFormatter(formatter)
         self.logger.addHandler(fh)
 
     def setup_network(self):
         model = models.create(cfg.MODEL.TYPE)
-        self.model = torch.nn.DataParallel(model).cuda()
+        self.model = model.cuda()
+        self.checkpointer = CaptionCheckpointer(
+            self.model, os.path.join(cfg.ROOT_DIR, "snapshot"))
+
         if self.args.resume > 0:
-            self.model.load_state_dict(
-                torch.load(self.snapshot_path("caption_model", self.args.resume),
-                    map_location=lambda storage, loc: storage)
-            )
-        
+            self.checkpointer.load(
+                self.snapshot_path("caption_model", self.args.resume))
+
     def eval(self, epoch):
         res = self.evaler(self.model, 'test_' + str(epoch), 2)
-        #res = self.evaler(self.model, 'val_' + str(epoch))
         self.logger.info('######## Epoch ' + str(epoch) + ' ########')
         self.logger.info(str(res))
 
     def snapshot_path(self, name, epoch):
         snapshot_folder = os.path.join(cfg.ROOT_DIR, 'snapshot')
         return os.path.join(snapshot_folder, name + "_" + str(epoch) + ".pth")
+
 
 def parse_args():
     """
@@ -94,6 +100,7 @@ def parse_args():
 
     args = parser.parse_args()
     return args
+
 
 if __name__ == '__main__':
     args = parse_args()

@@ -71,9 +71,6 @@ class XTransformer(BasicModel):
         att_feats = utils.expand_tensor(att_feats, cfg.DATA_LOADER.SEQ_PER_IMG)
 
         ##############################################
-        # print("seq[1]:\n{}".format(seq[1]))
-        # print("target_sent[1]:\n{}".format(kwargs[cfg.PARAM.TARGET_SENT][1]))
-        # exit(0)
         seq_mask = (seq > 0).type(torch.cuda.IntTensor)
         seq_mask[:, 0] += 1
         seq_mask = seq_mask.unsqueeze(-2)
@@ -87,8 +84,6 @@ class XTransformer(BasicModel):
         return decoder_out
 
     def get_logprobs_state(self, **kwargs):
-        #print("run get_logprobs_state")
-        #exit(0)
         wt = kwargs[cfg.PARAM.WT]
         state = kwargs[cfg.PARAM.STATE]
         encoder_out = kwargs[cfg.PARAM.ATT_FEATS]
@@ -193,11 +188,6 @@ class XTransformer(BasicModel):
                                                    word_logprob.shape[-1]))
             this_word_logprob = torch.gather(this_word_logprob, 2,
                                              selected_words.unsqueeze(-1))
-            #this_word_logprob2 = torch.gather(word_logprob.view(batch_size, -1), 1, selected_idx)
-            #this_word_logprob2 = this_word_logprob.view(batch_size, beam_size, 1)
-
-            #assert torch.eq(this_word_logprob, this_word_logprob2).all()
-
             log_probs = list(
                 torch.gather(
                     o, 1,
@@ -641,7 +631,6 @@ class DecoderLayer(nn.Module):
                 precompute=False):
         word_x = x
         residual = x
-        #print("gx.shape: {}".format(gx.shape))
         x = self.word_attn.forward2(query=gx,
                                     key=x,
                                     mask=seq_mask,
@@ -652,7 +641,6 @@ class DecoderLayer(nn.Module):
 
         residual = x
         x = self.layer_norm_cross(x)
-        #print("x.shape: {}".format(x.shape))
         x = self.cross_att.forward2(
             query=x,
             key=encoder_out if precompute == False else p_key,
@@ -660,8 +648,6 @@ class DecoderLayer(nn.Module):
             value1=x,
             value2=encoder_out if precompute == False else p_value2,
             precompute=precompute)
-        #print("x.shape: {}".format(x.shape))
-        #exit(0)
         x = self.cross_dropout(x)
         gx = residual + x
         gx = self.layer_norm_gx(gx)

@@ -7,6 +7,7 @@ from layers.attention import Attention
 from lib.config import cfg
 import lib.utils as utils
 
+
 class UpDown(AttBasicModel):
     def __init__(self):
         super(UpDown, self).__init__()
@@ -16,14 +17,15 @@ class UpDown(AttBasicModel):
         rnn_input_size = cfg.MODEL.RNN_SIZE + cfg.MODEL.WORD_EMBED_DIM + self.att_dim
         self.lstm1 = nn.LSTMCell(rnn_input_size, cfg.MODEL.RNN_SIZE)
         # Second LSTM Layer
-        self.lstm2 = nn.LSTMCell(cfg.MODEL.RNN_SIZE + self.att_dim, cfg.MODEL.RNN_SIZE)
+        self.lstm2 = nn.LSTMCell(cfg.MODEL.RNN_SIZE + self.att_dim,
+                                 cfg.MODEL.RNN_SIZE)
         self.att = Attention()
 
         if cfg.MODEL.BOTTOM_UP.DROPOUT_FIRST_INPUT > 0:
             self.dropout1 = nn.Dropout(cfg.MODEL.BOTTOM_UP.DROPOUT_FIRST_INPUT)
         else:
             self.dropout1 = None
-            
+
         if cfg.MODEL.BOTTOM_UP.DROPOUT_SEC_INPUT > 0:
             self.dropout2 = nn.Dropout(cfg.MODEL.BOTTOM_UP.DROPOUT_SEC_INPUT)
         else:
@@ -39,7 +41,7 @@ class UpDown(AttBasicModel):
         if gv_feat.shape[-1] == 1:  # empty gv_feat
             gv_feat = torch.mean(att_feats, 1)
         xt = self.word_embed(wt)
-        
+
         # lstm1
         h2_tm1 = state[0][-1]
         input1 = torch.cat([h2_tm1, gv_feat, xt], 1)
@@ -56,10 +58,3 @@ class UpDown(AttBasicModel):
 
         state = (torch.stack([h1_t, h2_t]), torch.stack([c1_t, c2_t]))
         return h2_t, state
-
-
-
-        
-
-        
-        

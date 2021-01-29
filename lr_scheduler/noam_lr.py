@@ -1,6 +1,7 @@
 import torch
 from lib.config import cfg
 
+
 class NoamLR(torch.optim.lr_scheduler._LRScheduler):
     def __init__(
         self,

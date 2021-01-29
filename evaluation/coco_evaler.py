@@ -9,6 +9,7 @@ sys.path.append(cfg.INFERENCE.COCO_PATH)
 from pycocotools.coco import COCO
 from pycocoevalcap.eval import COCOEvalCap
 
+
 class COCOEvaler(object):
     def __init__(self, annfile):
         super(COCOEvaler, self).__init__()
@@ -17,7 +18,9 @@ class COCOEvaler(object):
             os.mkdir(cfg.TEMP_DIR)
 
     def eval(self, result):
-        in_file = tempfile.NamedTemporaryFile(mode='w', delete=False, dir=cfg.TEMP_DIR)
+        in_file = tempfile.NamedTemporaryFile(mode='w',
+                                              delete=False,
+                                              dir=cfg.TEMP_DIR)
         json.dump(result, in_file)
         in_file.close()
 

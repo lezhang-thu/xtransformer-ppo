@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 
+
 class RewardCriterion(nn.Module):
     def __init__(self):
         super(RewardCriterion, self).__init__()
