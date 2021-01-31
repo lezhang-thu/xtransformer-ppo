@@ -102,7 +102,6 @@ class Trainer(object):
         self.predictor.load_state_dict(self.trainer.state_dict())
 
         self.optim = Optimizer(self.trainer)
-        self.rl_criterion = losses.create(cfg.LOSSES.RL_TYPE).cuda()
 
     def setup_dataset(self):
         self.coco_set = datasets.coco_dataset.CocoDataset(
@@ -184,6 +183,7 @@ class Trainer(object):
 
         seq_sample = seq_sample[:, None, :]
         advs = np.clip(advs[:, None, :], -1, 1)
+        #advs = advs[:, None, :]
         log_prob_sample = log_prob_sample[:, None, ...]
         return seq_sample, log_prob_sample, advs
 
@@ -300,7 +300,6 @@ class Trainer(object):
         # eval - crucial to disable dropout
         self.trainer.eval()
         self.predictor.eval()
-        self.optim.zero_grad()
 
         epoch, iteration = 0, 0
         val_current = None
@@ -330,20 +329,14 @@ class Trainer(object):
                         cfg.PARAM.ADVS: advs
                     }
                     loss = self.mb_train(kwargs)
-                    loss.backward()
-                    torch.nn.utils.clip_grad_norm_(self.trainer.parameters(),
-                                                   0.5, 2)
-                    self.optim.step()
                     self.optim.zero_grad()
+                    loss.backward()
+                    #torch.nn.utils.clip_grad_norm_(self.trainer.parameters(), 0.5, 2)
+                    self.optim.step()
                     time.sleep(1)
 
-            if iteration % 32 == 0:
+            if iteration % 64 == 0:
                 self.predictor.load_state_dict(self.trainer.state_dict())
-                if iteration < 896 * 2 and iteration % 256 == 0:
-                    self.logger.info("val_current @iteration {}: {}".format(
-                        iteration, self._compute_val(iteration)))
-
-            if iteration >= 896 * 2 and iteration % 32 == 0:
                 val_current = self._compute_val(iteration)
                 if val_best is None:
                     val_best = val_current
@@ -359,6 +352,8 @@ class Trainer(object):
                 if val_best <= val_current:
                     self.save_model(23)
                     val_best = val_current
+            if iteration == 3584:
+                break
 
     def _compute_val(self, iteration):
         val_res = self.val_evaler(self.trainer, 'val_' + str(iteration), 1)
