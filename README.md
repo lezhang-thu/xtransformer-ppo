@@ -15,7 +15,7 @@ is implemented for replacing the sentence-level baseline, for which all words ha
 
 A pre-trained model can be downloaded [here](https://drive.google.com/file/d/1XR_Sf3c1M0UNdyMx1fWJm3g4sFYWFjnD/view?usp=sharing). 
 
-(This model achieve a CIDEr score of
+(This model achieves a CIDEr score of
 133.3% on the MSCOCO Karpathy test set, for which X-Transformer in [JDAI-CV / image-captioning](https://github.com/JDAI-CV/image-captioning) obtains 132.8%.)
 
 ## Training
